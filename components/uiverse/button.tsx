@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = () => {
+interface ButtonProps {
+  children?: React.ReactNode;
+  onClick?: () => void;
+}
+
+const Button = ({ children = 'Press me', onClick }: ButtonProps) => {
   return (
     <StyledWrapper>
-      <button className="button">
+      <button className="button" onClick={onClick}>
         <div className="button-outer">
           <div className="button-inner">
-            <span>Press me</span>
+            <span>{children}</span>
           </div>
         </div>
       </button>

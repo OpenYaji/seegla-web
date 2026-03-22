@@ -17,7 +17,7 @@ export default function AnimateOnScroll({
   className,
   delay = 0,
   animation = 'fade-up',
-  threshold = 0.1,
+  threshold = 0.12,
   once = false,
 }: AnimateOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -47,17 +47,20 @@ export default function AnimateOnScroll({
     <div
       ref={ref}
       className={cn(
-        'transition-all duration-700 ease-out',
+        'transition-all duration-700',
         !isVisible && 'opacity-0',
-        !isVisible && animation === 'fade-up' && 'translate-y-10',
-        !isVisible && animation === 'fade-down' && '-translate-y-10',
-        !isVisible && animation === 'fade-left' && 'translate-x-10',
-        !isVisible && animation === 'fade-right' && '-translate-x-10',
-        !isVisible && animation === 'zoom-in' && 'scale-95',
+        !isVisible && animation === 'fade-up'    && 'translate-y-8',
+        !isVisible && animation === 'fade-down'  && '-translate-y-8',
+        !isVisible && animation === 'fade-left'  && 'translate-x-8',
+        !isVisible && animation === 'fade-right' && '-translate-x-8',
+        !isVisible && animation === 'zoom-in'    && 'scale-95',
         isVisible && 'opacity-100 translate-y-0 translate-x-0 scale-100',
         className
       )}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{
+        transitionDelay: `${delay}ms`,
+        transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      }}
     >
       {children}
     </div>

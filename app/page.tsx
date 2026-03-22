@@ -1,15 +1,12 @@
 'use client'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useState } from 'react'
 import MarketingNav from '@/components/marketing/navbar'
 import AnimateOnScroll from '@/components/ui/animate-on-scroll'
 import {
-  Activity, Award, Users, ShieldCheck, BarChart3,
-  HeartPulse, CheckCircle2, ArrowRight, Building2, Flame,
-  Footprints, Droplet, Moon, TrendingUp, ChevronDown, Zap,
-  Target, Trophy, Quote,
+  Zap, CreditCard, BarChart3, Footprints, Moon, Flame, Bell,
+  ShieldCheck, CheckCircle2, ChevronDown, Check,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -18,330 +15,225 @@ import {
 
 const STEPS = [
   {
-    step: '01',
-    icon: Target,
-    title: 'Daily Challenges',
-    description: 'Employees complete short, engaging wellness challenges that build healthy habits without disrupting work.',
-    tag: 'Habit Building',
+    icon: Zap,
+    title: '1. Daily Challenges',
+    description:
+      'Employees complete short, engaging wellness challenges that build healthy habits without disrupting work. Designed for the high-performance professional.',
   },
   {
-    step: '02',
-    icon: Trophy,
-    title: 'Company-Funded Rewards',
-    description: 'Points earned can be redeemed for perks or cash, motivating participation and rewarding healthy behavior.',
-    tag: 'Incentives',
+    icon: CreditCard,
+    title: '2. Company-Funded Rewards',
+    description:
+      'Points earned can be redeemed for local perks or cash via GCash integration, motivating participation and rewarding consistent healthy behavior.',
   },
   {
-    step: '03',
     icon: BarChart3,
-    title: 'Measurable Impact',
-    description: 'Track team performance, monitor wellness progress, and measure ROI with clean, easy-to-use dashboards.',
-    tag: 'Analytics',
-  },
-]
-
-const BENEFITS = [
-  { icon: TrendingUp,  text: 'Reduce sick days and improve overall productivity' },
-  { icon: ShieldCheck, text: 'Lower healthcare costs with quantifiable, measurable ROI' },
-  { icon: Users,       text: 'Boost employee engagement and retention through gamified wellness' },
-  { icon: Award,       text: 'Company-funded rewards make wellness tangible and motivating' },
-  { icon: BarChart3,   text: 'Real-time dashboards built for HR and Operations teams' },
-]
-
-const STATS = [
-  { value: '42×',  label: 'Average ROI',        sub: 'for 200-person teams'    },
-  { value: '32%',  label: 'Fewer Sick Days',     sub: 'avg. across clients'     },
-  { value: '89%',  label: 'Participation Rate',  sub: 'monthly active'          },
-  { value: '2.4×', label: 'Team Engagement',     sub: 'improvement vs baseline' },
-]
-
-const TESTIMONIALS = [
-  {
-    company: 'Ayala Land Corp',
-    industry: 'Real Estate · 1,200+ employees',
-    metric: '38% fewer sick days',
-    quote: 'SEEGLA transformed how we approach employee wellness. The ROI was visible within the first quarter.',
-    role: 'Chief People Officer',
-  },
-  {
-    company: 'MedFirst Healthcare',
-    industry: 'Healthcare · 850 employees',
-    metric: '94% participation rate',
-    quote: 'Our team actually looks forward to the daily challenges. Engagement and morale have never been higher.',
-    role: 'HR Director',
-  },
-  {
-    company: 'TechVentures PH',
-    industry: 'Technology · 320 employees',
-    metric: '52× ROI achieved',
-    quote: 'The analytics dashboard alone is worth it. We can finally tie wellness initiatives to business outcomes.',
-    role: 'Chief Operating Officer',
+    title: '3. Measurable Impact',
+    description:
+      'Track team performance, monitor burnout risk, and measure ROI with clean dashboards built for HR leaders and executives.',
   },
 ]
 
 const FAQS = [
   {
-    q: 'What is SEEGLA and who is it for?',
-    a: 'SEEGLA is a B2B corporate wellness platform designed for Philippine companies, HR teams, and wellness service providers. It lets employees track daily health habits, join team challenges, earn rewards, and compete on leaderboards — all managed through a dedicated HR admin dashboard.',
+    q: 'What is Seegla and who is it for?',
+    a: 'Seegla is the first gamified corporate wellness platform specifically built for the Filipino workforce. It is designed for HR managers and CEOs at Philippine companies — particularly BPOs, SMEs, and mid-size corporations with 20 to 500 employees — who want to reduce burnout, improve productivity, and retain their people.',
   },
   {
-    q: 'How does the licensing model work?',
-    a: 'SEEGLA uses a per-employee, per-month (PEPM) seat-based model. You purchase a license for a set number of employee seats. Our team issues you a license key, activates your organization, and you\'re live the same day. Annual and multi-year terms are available at discounted rates.',
+    q: 'How does the pricing work?',
+    a: 'Seegla is currently in beta and free for our partner companies. Our beta program is now closed to new applicants — but you can join the waitlist to be first in line when we open to new companies.',
   },
   {
-    q: 'Can I manage multiple companies from one account?',
-    a: 'Yes. Resellers and service providers get a System Admin dashboard that lets you onboard, configure, and monitor every client organization from a single login. You can issue license keys, adjust seat counts, and view cross-organization analytics in real time.',
+    q: 'How do employees join?',
+    a: 'HR managers receive a unique 6-character company code when they onboard. Employees download the Seegla app on their personal phone — iOS or Android — enter the company code, and are live within minutes. No IT setup required.',
   },
   {
-    q: 'Does SEEGLA work as a mobile app?',
-    a: 'Yes. SEEGLA is built as a progressive web app (PWA) that installs on Android and iOS, plus a native Android APK via Capacitor. Employees get a clean, fast mobile experience with real-time step tracking using their phone\'s accelerometer — no wearable required.',
+    q: 'What activities earn points?',
+    a: 'Points are earned only through verified activities — daily burnout check-in (10 pts), step tracking via Google Fit or Apple Health (up to 20 pts per day), daily login streak (5 pts per day), and the 8PM Promo Hour bonus points drop (15 to 30 pts). All points are verified by the app.',
   },
   {
-    q: 'What health metrics can employees track?',
-    a: 'Employees can track steps, water intake, sleep hours, exercise minutes, nutrition logs, and meditation sessions. The platform also features a live accelerometer-based step counter, daily habit streaks, and a community feed for sharing wellness tips and recipes.',
+    q: 'Can employers see individual employee health data?',
+    a: 'No. Individual employee responses are completely private. HR managers and CEOs only see aggregated, anonymized team and department-level wellness scores. Seegla is fully compliant with the Philippine Data Privacy Act — Republic Act 10173.',
   },
   {
-    q: 'How do rewards and points work?',
-    a: 'Employees earn points by logging daily health habits, completing challenges, hitting streak milestones, and sharing peer-validated tips. Points can be redeemed for vouchers through the Brand Marketplace — available on SIGLA and ANGAT plans.',
+    q: 'What does the HR dashboard show?',
+    a: 'The HR dashboard shows the company’s overall wellness score updated daily, a burnout risk index flagging departments with consistently low scores, check-in completion rates, department-by-department comparisons, and an automated weekly wellness report.',
   },
   {
-    q: 'Is employee health data kept private?',
-    a: 'Absolutely. SEEGLA uses row-level security (RLS) so each employee only sees their own data. HR admins see aggregated, anonymized team analytics. Individual health logs are never shared with management without employee consent.',
+    q: 'How does the rewards system work?',
+    a: 'Companies fund their own rewards budget through the Seegla platform. HR sets the rewards table (e.g., 1,000 points = ₱50 via GCash). Employees earn points through verified daily activities and redeem them based on their company’s table. Seegla processes the redemption automatically.',
   },
   {
-    q: 'What is the minimum number of employees to get started?',
-    a: 'There\'s no hard minimum. The BUHAY plan supports up to 50 employees, SIGLA covers 51–200, and ANGAT is custom-priced for 1,000+ seats. We also offer a starter license for smaller teams who want to pilot the platform first.',
+    q: 'Is Seegla available on iOS and Android?',
+    a: 'Yes. Seegla is built using React Native via Expo — a single codebase that runs natively on both iOS and Android. No wearable device is required.',
   },
 ]
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Dashboard Mockup (hero visual)
-// ─────────────────────────────────────────────────────────────────────────────
-
-function DashboardMockup() {
-  const bars = [58, 72, 65, 85, 79, 88, 92, 70, 83, 89, 76, 94]
-
-  return (
-    <div className="relative mx-auto max-w-[420px]">
-      {/* Floating badges */}
-      <div className="absolute -right-3 top-10 z-10 rounded-xl bg-white px-3 py-2 shadow-xl ring-1 ring-slate-100">
-        <div className="flex items-center gap-1.5">
-          <div className="h-2 w-2 rounded-full bg-[#1B9AAA] animate-pulse" />
-          <span className="text-[10px] font-bold text-[#001148]">89% active today</span>
-        </div>
-      </div>
-      <div className="absolute -left-3 bottom-16 z-10 rounded-xl bg-white px-3 py-2 shadow-xl ring-1 ring-slate-100">
-        <div className="flex items-center gap-1.5">
-          <TrendingUp className="h-3 w-3 text-[#F47560]" />
-          <span className="text-[10px] font-bold text-[#001148]">ROI: 42× return</span>
-        </div>
-      </div>
-
-      {/* Tablet frame */}
-      <div className="rounded-2xl bg-[#001148] p-2.5 shadow-2xl ring-1 ring-[#001148]/30">
-        <div className="overflow-hidden rounded-xl bg-white">
-
-          {/* Dashboard header */}
-          <div className="flex items-center justify-between bg-[#001148] px-4 py-3">
-            <span className="text-sm font-black tracking-wide text-white">SEEGLA</span>
-            <span className="text-[10px] font-medium text-white/50">Employee Health Dashboard</span>
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#1B9AAA]">
-              <Users className="h-3 w-3 text-white" />
-            </div>
-          </div>
-
-          {/* KPI tiles */}
-          <div className="grid grid-cols-3 gap-2 p-3">
-            {[
-              { label: 'Active Employees', value: '476',   sub: '+12 this week',   bg: 'bg-[#001148]' },
-              { label: 'Participation',    value: '89%',   sub: 'Monthly active',  bg: 'bg-[#1B9AAA]' },
-              { label: 'Points Redeemed', value: '3,975', sub: 'This quarter',     bg: 'bg-[#F47560]' },
-            ].map(({ label, value, sub, bg }) => (
-              <div key={label} className={`${bg} rounded-xl p-3 text-white`}>
-                <p className="text-lg font-black leading-none">{value}</p>
-                <p className="mt-1 text-[8px] font-semibold leading-tight opacity-90">{label}</p>
-                <p className="mt-0.5 text-[7px] opacity-60">{sub}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Bar chart */}
-          <div className="mx-3 mb-2.5 rounded-xl border border-slate-100 bg-slate-50 p-3">
-            <p className="mb-2 text-[8px] font-bold uppercase tracking-widest text-slate-400">
-              Employee Health Metrics — Last 12 Months
-            </p>
-            <div className="flex items-end gap-0.5 h-14">
-              {bars.map((h, i) => (
-                <div
-                  key={i}
-                  className="flex-1 rounded-t-sm transition-all"
-                  style={{
-                    height: `${h}%`,
-                    backgroundColor: i % 3 === 0 ? '#001148' : i % 3 === 1 ? '#1B9AAA' : '#D4EFF2',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Top performers */}
-          <div className="mx-3 mb-3 rounded-xl border border-slate-100 bg-white p-3">
-            <p className="mb-2 text-[8px] font-bold uppercase tracking-widest text-slate-400">Top Performers</p>
-            {[
-              { name: 'Maria S.', pts: '1,240', pct: 92 },
-              { name: 'Juan C.',  pts: '1,185', pct: 88 },
-              { name: 'Ana R.',   pts: '1,020', pct: 76 },
-            ].map(({ name, pts, pct }) => (
-              <div key={name} className="mb-2 flex items-center gap-2 last:mb-0">
-                <span className="w-11 text-[9px] font-semibold text-slate-700">{name}</span>
-                <div className="flex-1 h-1.5 rounded-full bg-slate-100">
-                  <div
-                    className="h-full rounded-full bg-[#1B9AAA] transition-all"
-                    style={{ width: `${pct}%` }}
-                  />
-                </div>
-                <span className="text-[9px] font-black text-[#001148]">{pts}pts</span>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Phone Mockup
-// ─────────────────────────────────────────────────────────────────────────────
-
-function PhoneMockup() {
-  const metrics = [
-    { Icon: Footprints, label: 'Steps',    value: '7,842', sub: '78% of goal', pct: 78, bg: 'bg-[#E8F6F8]', text: 'text-[#001148]', bar: 'bg-[#1B9AAA]' },
-    { Icon: Droplet,    label: 'Water',    value: '1.4L',  sub: '70% of goal', pct: 70, bg: 'bg-[#FEF0EB]', text: 'text-[#001148]', bar: 'bg-[#F47560]' },
-    { Icon: Moon,       label: 'Sleep',    value: '7.5h',  sub: 'Goal met',    pct: 94, bg: 'bg-[#E8F6F8]', text: 'text-[#001148]', bar: 'bg-[#1B9AAA]' },
-    { Icon: Activity,   label: 'Exercise', value: '25min', sub: '83% of goal', pct: 83, bg: 'bg-[#EEF0F8]', text: 'text-[#001148]', bar: 'bg-[#001148]' },
-  ]
-
-  return (
-    <div className="relative mx-auto w-[262px]">
-      <div className="absolute -right-10 top-14 z-10 rounded-2xl bg-white px-3 py-1.5 shadow-xl ring-1 ring-slate-100">
-        <div className="flex items-center gap-1.5">
-          <div className="h-2 w-2 rounded-full bg-[#1B9AAA]" />
-          <span className="text-[10px] font-bold text-[#001148]">+12 pts earned</span>
-        </div>
-      </div>
-      <div className="absolute -left-10 bottom-28 z-10 rounded-2xl bg-white px-3 py-1.5 shadow-xl ring-1 ring-slate-100">
-        <div className="flex items-center gap-1.5">
-          <Flame className="h-3 w-3 text-[#F47560]" />
-          <span className="text-[10px] font-bold text-[#001148]">14-day streak</span>
-        </div>
-      </div>
-
-      <div className="relative rounded-[44px] bg-[#001148] p-2.5 shadow-2xl ring-2 ring-[#001148]/40">
-        <div className="absolute -left-[3px] top-20 h-9 w-[3px] rounded-l-full bg-[#001148]/60" />
-        <div className="absolute -left-[3px] top-32 h-7 w-[3px] rounded-l-full bg-[#001148]/60" />
-        <div className="absolute -right-[3px] top-28 h-12 w-[3px] rounded-r-full bg-[#001148]/60" />
-
-        <div className="overflow-hidden rounded-[36px] bg-white">
-          <div className="flex items-center justify-between bg-white px-5 pt-3 pb-1 text-[11px] font-bold text-[#001148]">
-            <span>9:41</span>
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-px">
-                {[3, 5, 7, 9].map((h, i) => (
-                  <div key={i} className="w-[3px] rounded-sm bg-[#001148]" style={{ height: h }} />
-                ))}
-              </div>
-              <div className="h-2.5 w-5 rounded-sm border border-[#001148] p-px">
-                <div className="h-full w-3/4 rounded-sm bg-[#001148]" />
-              </div>
-            </div>
-          </div>
-          <div className="mx-auto h-5 w-[72px] rounded-b-2xl bg-[#001148] -mt-px mb-1.5" />
-          <div className="bg-white px-4 pb-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[10px] font-medium text-slate-500">Good morning</p>
-                <p className="text-sm font-black text-[#001148]">Maria Santos</p>
-              </div>
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F6F8]">
-                <HeartPulse className="h-4 w-4 text-[#1B9AAA]" />
-              </div>
-            </div>
-          </div>
-          <div className="mx-3 mb-2.5 flex items-center gap-2.5 rounded-2xl bg-[#001148] px-3 py-2.5 shadow-sm">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-white/20">
-              <Flame className="h-3.5 w-3.5 text-[#F47560]" />
-            </div>
-            <div>
-              <p className="text-[11px] font-bold leading-tight text-white">14-Day Streak!</p>
-              <p className="text-[9px] text-white/50">Keep logging daily</p>
-            </div>
-            <span className="ml-auto text-lg">🔥</span>
-          </div>
-          <div className="px-3 pb-1">
-            <p className="mb-2 text-[9px] font-bold uppercase tracking-widest text-slate-400">Today&apos;s Habits</p>
-            <div className="grid grid-cols-2 gap-1.5">
-              {metrics.map(({ Icon, label, value, sub, pct, bg, text, bar }) => (
-                <div key={label} className={`${bg} rounded-2xl p-2.5`}>
-                  <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-xl bg-[#001148] shadow-sm">
-                    <Icon className="h-3.5 w-3.5 text-white" />
-                  </div>
-                  <p className={`text-sm font-black leading-tight ${text}`}>{value}</p>
-                  <p className="text-[9px] text-slate-500 mt-0.5 leading-tight">{label}</p>
-                  <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-white/60">
-                    <div className={`h-full rounded-full ${bar}`} style={{ width: `${pct}%` }} />
-                  </div>
-                  <p className="mt-0.5 text-[8px] font-semibold text-slate-500">{sub}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-3 flex items-center justify-around border-t border-slate-100 bg-white px-4 py-2.5">
-            {[
-              { Icon: HeartPulse, label: 'Home',    active: true  },
-              { Icon: BarChart3,  label: 'Stats',   active: false },
-              { Icon: Award,      label: 'Rewards', active: false },
-              { Icon: Users,      label: 'Team',    active: false },
-            ].map(({ Icon, label, active }) => (
-              <div key={label} className="flex flex-col items-center gap-0.5">
-                <Icon className={`h-[18px] w-[18px] ${active ? 'text-[#1B9AAA]' : 'text-slate-300'}`} />
-                <span className={`text-[8px] font-semibold ${active ? 'text-[#001148]' : 'text-slate-400'}`}>{label}</span>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center bg-white pb-2 pt-0.5">
-            <div className="h-[3px] w-20 rounded-full bg-slate-200" />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// FAQ accordion
+// Sub-components
 // ─────────────────────────────────────────────────────────────────────────────
 
 function FaqAccordion() {
-  const [open, setOpen] = useState<number | null>(null)
+  const [open, setOpen] = useState<number | null>(0)
   return (
-    <div className="divide-y divide-slate-100 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+    <div className="max-w-3xl mx-auto space-y-4">
       {FAQS.map((item, i) => (
-        <div key={i}>
+        <div
+          key={i}
+          className="bg-white rounded-2xl border border-[#C6C5D1]/10 shadow-[0_10px_30px_rgba(0,17,72,0.06)] overflow-hidden"
+        >
           <button
             onClick={() => setOpen(open === i ? null : i)}
-            className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-slate-50"
+            className="flex w-full items-center justify-between gap-4 p-8 text-left"
           >
-            <span className="font-semibold text-[#001148] text-sm leading-snug">{item.q}</span>
-            <ChevronDown className={`h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 ${open === i ? 'rotate-180' : ''}`} />
+            <span className="text-lg font-headline font-bold text-[#001148]">{item.q}</span>
+            <ChevronDown
+              className={`h-5 w-5 shrink-0 text-[#45464F] transition-transform duration-200 ${open === i ? 'rotate-180' : ''
+                }`}
+            />
           </button>
-          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${open === i ? 'max-h-96' : 'max-h-0'}`}>
-            <p className="px-6 pb-5 text-sm leading-relaxed text-slate-500">{item.a}</p>
+          <div
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${open === i ? 'max-h-64' : 'max-h-0'
+              }`}
+          >
+            <p className="px-8 pb-8 text-[#45464F] leading-relaxed font-medium">{item.a}</p>
           </div>
         </div>
       ))}
     </div>
+  )
+}
+
+function WaitlistForm() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
+  const [form, setForm] = useState({
+    fullName: '',
+    workEmail: '',
+    companyName: '',
+    companySize: '1-50',
+    role: 'hr',
+  })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+    setErrorMsg('')
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setErrorMsg(data.error ?? 'Something went wrong.')
+        setStatus('error')
+        return
+      }
+      setStatus('success')
+    } catch {
+      setErrorMsg('Could not connect. Please try again.')
+      setStatus('error')
+    }
+  }
+
+  const inputClass =
+    'w-full bg-[#F7F9FC] border-0 border-b-2 border-[#C6C5D1] focus:border-[#1B9AAA] focus:ring-0 focus:outline-none transition-all px-0 py-4 text-sm font-medium text-[#191C1E] placeholder:text-[#45464F]/50'
+  const labelClass =
+    'block text-[10px] font-headline font-bold text-[#001148] uppercase tracking-widest mb-3'
+
+  if (status === 'success') {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        <CheckCircle2 className="h-12 w-12 text-[#1B9AAA] mb-4" />
+        <h3 className="text-2xl font-headline font-extrabold text-[#001148] mb-2">
+          You&apos;re on the list.
+        </h3>
+        <p className="text-[#45464F] font-medium">
+          We&apos;ll reach out with early access details soon.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <label className={labelClass}>Full Name</label>
+          <input
+            type="text"
+            required
+            placeholder="Juan Dela Cruz"
+            value={form.fullName}
+            onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className={labelClass}>Work Email</label>
+          <input
+            type="email"
+            required
+            placeholder="juan@company.ph"
+            value={form.workEmail}
+            onChange={(e) => setForm({ ...form, workEmail: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+      </div>
+      <div>
+        <label className={labelClass}>Company Name</label>
+        <input
+          type="text"
+          required
+          placeholder="Enter your organization"
+          value={form.companyName}
+          onChange={(e) => setForm({ ...form, companyName: e.target.value })}
+          className={inputClass}
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <label className={labelClass}>Company Size</label>
+          <select
+            value={form.companySize}
+            onChange={(e) => setForm({ ...form, companySize: e.target.value })}
+            className={inputClass}
+          >
+            <option value="1-50">1–50 employees</option>
+            <option value="51-200">51–200 employees</option>
+            <option value="201-500">201–500 employees</option>
+            <option value="500+">500+ employees</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelClass}>Role</label>
+          <select
+            value={form.role}
+            onChange={(e) => setForm({ ...form, role: e.target.value })}
+            className={inputClass}
+          >
+            <option value="hr">HR Manager</option>
+            <option value="ceo">CEO / Founder</option>
+            <option value="ops">Operations</option>
+            <option value="wellness">Wellness Lead</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      {status === 'error' && (
+        <p className="text-sm text-[#ba1a1a] font-medium">{errorMsg}</p>
+      )}
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="w-full bg-[#1B9AAA] text-white py-5 rounded-2xl font-headline font-extrabold text-base hover:brightness-110 transition-all shadow-xl shadow-[#1B9AAA]/20 disabled:opacity-60"
+      >
+        {status === 'loading' ? 'Submitting…' : 'Join the Waitlist'}
+      </button>
+    </form>
   )
 }
 
@@ -351,129 +243,77 @@ function FaqAccordion() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F7F9FC]">
       <MarketingNav />
 
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-white pt-20">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.035]"
-          style={{
-        backgroundImage: 'linear-gradient(rgba(0,17,72,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(0,17,72,.6) 1px, transparent 1px)',
-        backgroundSize: '48px 48px',
-          }}
-        />
-        {/* Soft teal glow top-right */}
-        <div className="pointer-events-none absolute -top-32 right-0 h-[500px] w-[500px] rounded-full bg-[#1B9AAA] opacity-[0.06] blur-[100px]" />
-
-        <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-16">
-          <div className="grid items-center gap-16 lg:grid-cols-1">
-
-        {/* Center — copy */}
-        <div className="text-center mx-auto max-w-3xl">
+      <header
+        className="relative pt-48 pb-32 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #F7F9FC 0%, #ECEEF1 100%)' }}
+      >
+        <div className="max-w-[1280px] mx-auto px-8 text-center">
           <AnimateOnScroll animation="fade-up">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#1B9AAA]/20 bg-[#E8F6F8] px-4 py-1.5 text-sm font-semibold text-[#1B9AAA]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#1B9AAA] animate-pulse" />
-          B2B Corporate Wellness Platform
-            </div>
+            <span className="inline-block bg-[#001148]/5 text-[#001148] px-4 py-1.5 rounded-full text-[10px] font-headline font-bold tracking-[0.2em] mb-8 uppercase">
+              B2B CORPORATE WELLNESS PLATFORM
+            </span>
           </AnimateOnScroll>
 
-          <AnimateOnScroll delay={80}>
-            <h1 className="mb-5 text-4xl font-black leading-[1.06] tracking-tight text-[#001148] md:text-5xl lg:text-6xl">
-          Your Healthiest<br />
-          Employees Are Your<br />
-          <span className="text-[#1B9AAA]">Top Performers.</span>
+          <AnimateOnScroll animation="fade-up" delay={80}>
+            <h1 className="text-5xl md:text-7xl font-headline font-extrabold text-[#001148] leading-[1.1] mb-8 tracking-tight max-w-4xl mx-auto">
+              Your Healthiest Employees Are Your{' '}
+              <span className="text-[#1B9AAA]">Top Performers.</span>
             </h1>
           </AnimateOnScroll>
 
-          <AnimateOnScroll delay={160}>
-            <p className="mb-8 mx-auto max-w-lg text-lg leading-relaxed text-slate-500">
-          SEEGLA helps Philippine companies boost employee wellness, increase engagement, and reduce healthcare costs — delivering measurable ROI from day one.
+          <AnimateOnScroll animation="fade-up" delay={160}>
+            <p className="text-xl text-[#45464F] mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
+              Seegla helps companies boost employee wellness, increase engagement, and reduce
+              healthcare costs — delivering measurable results for the modern Filipino workforce.
             </p>
           </AnimateOnScroll>
 
-          <AnimateOnScroll delay={240}>
-            <div className="flex flex-wrap justify-center gap-3">
-          <Link href="/book-a-demo">
-            <Button
-              size="lg"
-              className="h-12 gap-2 rounded-full bg-[#1B9AAA] px-8 text-base font-bold text-white hover:bg-[#157B89] hover:-translate-y-0.5 transition-all duration-150 shadow-[0_6px_0_0_rgba(27,154,170,0.3)]"
-            >
-              Request a Demo <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Link href="/waitlist">
-            <Button
-              size="lg"
-              variant="outline"
-              className="h-12 rounded-full border-[#001148]/20 bg-white px-8 text-base font-semibold text-[#001148] hover:bg-[#001148]/5 hover:-translate-y-0.5 transition-all duration-150"
-            >
-              Join the Waitlist
-            </Button>
-          </Link>
+          <AnimateOnScroll animation="fade-up" delay={240}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/book-a-demo">
+                <button className="bg-[#1B9AAA] text-white px-10 py-5 rounded-2xl font-headline font-bold text-base shadow-lg shadow-[#1B9AAA]/20 hover:-translate-y-1 transition-all">
+                  Book a Demo
+                </button>
+              </Link>
+              <a href="#waitlist">
+                <button className="bg-white text-[#001148] px-10 py-5 rounded-2xl font-headline font-bold text-base border border-[#C6C5D1]/30 shadow-[0_10px_30px_rgba(0,17,72,0.06)] hover:bg-[#ECEEF1] transition-all">
+                  Join the Waitlist
+                </button>
+              </a>
             </div>
-            <p className="mt-4 text-xs text-slate-400">
-          Seat-based licensing · Annual or multi-year terms · Starter license free
-            </p>
           </AnimateOnScroll>
         </div>
+      </header>
 
-            {/* Right — dashboard mockup */}
-
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── STATS BAR ────────────────────────────────────────────────────────── */}
-      <div className="border-y border-slate-100 bg-[#F7F9FC] py-6">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-3 px-6">
-          {[
-            { value: 'PEPM',    label: 'Seat-Based Licensing'  },
-            { value: 'Mobile',  label: 'iOS & Android Ready'   },
-          ].map((stat, i) => (
-            <AnimateOnScroll key={stat.label} animation="zoom-in" delay={i * 70}>
-              <div className="flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-5 py-2.5 shadow-sm">
-                <p className="text-base font-black text-[#001148]">{stat.value}</p>
-                <p className="text-sm text-slate-500">{stat.label}</p>
-              </div>
-            </AnimateOnScroll>
-          ))}
-        </div>
-      </div>
-
-        {/* ── HOW IT WORKS ─────────────────────────────────────────────────────── */}
-        <section id="how-it-works" className="bg-white py-28">
-        <div className="mx-auto max-w-6xl px-6">
+      {/* ── HOW IT WORKS ─────────────────────────────────────────────────────── */}
+      <section id="how-it-works" className="py-32 bg-white">
+        <div className="max-w-[1280px] mx-auto px-8">
           <AnimateOnScroll>
-            <div className="mb-16 max-w-xl">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#1B9AAA]">
-                How It Works
-              </p>
-              <h2 className="text-4xl font-black leading-tight tracking-tight text-[#001148] md:text-5xl">
-                Simple, measurable,<br />and impactful wellness.
+            <div className="text-center mb-24">
+              <span className="text-[#1B9AAA] font-headline font-bold tracking-widest text-xs uppercase">
+                The Ecosystem
+              </span>
+              <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-[#001148] mt-6">
+                Simple, measurable, and impactful wellness.
               </h2>
             </div>
           </AnimateOnScroll>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {STEPS.map((s, i) => (
-              <AnimateOnScroll key={s.step} animation="fade-up" delay={i * 100}>
-                <div className="group relative flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-[#1B9AAA] hover:shadow-xl hover:-translate-y-1">
-                  <span className="absolute right-6 top-5 text-7xl font-black text-slate-100 leading-none select-none group-hover:text-[#E8F6F8] transition-colors">
-                    {s.step}
-                  </span>
-
-                  <div className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#001148]">
-                    <s.icon className="h-6 w-6 text-white" />
+              <AnimateOnScroll key={s.title} animation="fade-up" delay={i * 100}>
+                <div className="p-10 rounded-3xl bg-[#F7F9FC] border border-[#C6C5D1]/20 hover:border-[#1B9AAA]/30 transition-colors h-full">
+                  <div className="w-16 h-16 bg-[#1B9AAA]/10 rounded-2xl flex items-center justify-center mb-10">
+                    <s.icon className="h-8 w-8 text-[#1B9AAA]" />
                   </div>
-
-                  <span className="relative z-10 mb-3 inline-block w-fit rounded-full bg-[#E8F6F8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1B9AAA]">
-                    {s.tag}
-                  </span>
-
-                  <h3 className="relative z-10 mb-3 text-xl font-black text-[#001148]">{s.title}</h3>
-                  <p className="relative z-10 flex-1 text-sm leading-relaxed text-slate-500">{s.description}</p>
+                  <h3 className="text-2xl font-headline font-extrabold text-[#001148] mb-5">
+                    {s.title}
+                  </h3>
+                  <p className="text-[#45464F] leading-relaxed font-medium">{s.description}</p>
                 </div>
               </AnimateOnScroll>
             ))}
@@ -481,269 +321,351 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── ABOUT / FOR SYSTEM ADMINS ────────────────────────────────────────── */}
-      <section id="features" className="bg-[#F7F9FC] py-28">
-        <div className="mx-auto max-w-6xl px-6">
+      {/* ── FEATURES BENTO ───────────────────────────────────────────────────── */}
+      <section id="features" className="py-32 bg-[#ECEEF1]/50">
+        <div className="max-w-[1280px] mx-auto px-8">
           <AnimateOnScroll>
-            <div className="overflow-hidden rounded-3xl bg-white border border-slate-200 p-10 md:p-14 relative shadow-sm">
-              <div className="md:flex md:items-center md:gap-16">
-                <div className="flex-1">
-                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#1B9AAA]/20 bg-[#E8F6F8] px-4 py-1.5 text-sm font-semibold text-[#1B9AAA]">
-                    <Building2 className="h-3.5 w-3.5" />
-                    For Resellers &amp; Service Providers
-                  </div>
-                  <h2 className="mb-5 text-3xl font-black text-[#001148] md:text-4xl">
-                    One admin panel.<br />Every license. Full control.
-                  </h2>
-                  <p className="mb-7 text-slate-500 leading-relaxed max-w-lg">
-                    Manage every client license from a single login — issue keys, adjust seat counts, monitor platform-wide analytics, and suspend or renew licenses in real time.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    {[
-                      'Issue and revoke license keys per client',
-                      'Control seat limits and license expiry',
-                      'View MRR and cross-org health analytics',
-                      'Apply white-label branding per organization',
-                    ].map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-sm text-slate-600">
-                        <CheckCircle2 className="h-4 w-4 shrink-0 text-[#1B9AAA]" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href="/book-a-demo">
-                    <Button className="gap-2 rounded-full bg-[#001148] px-6 font-bold text-white hover:bg-[#001148]/80 transition-all duration-150">
-                      Talk to Our Team <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
-                <div className="mt-10 md:mt-0 flex shrink-0 items-center justify-center">
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { label: 'Licenses Issued', value: '500+',  icon: Zap        },
-                      { label: 'Orgs Managed',    value: '120+',  icon: Building2  },
-                      { label: 'Seats Active',    value: '50K+',  icon: Users      },
-                      { label: 'Uptime SLA',      value: '99.9%', icon: ShieldCheck },
-                    ].map(({ label, value, icon: Icon }) => (
-                      <div key={label} className="rounded-2xl border border-[#001148]/10 bg-[#001148] p-5 text-center">
-                        <Icon className="h-5 w-5 mx-auto mb-2 text-[#1B9AAA]" />
-                        <p className="text-xl font-black text-white">{value}</p>
-                        <p className="text-[10px] text-white/40 mt-0.5">{label}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="mb-20 max-w-3xl">
+              <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-[#001148]">
+                Everything they need. In their pocket.
+              </h2>
+              <p className="text-lg text-[#45464F] mt-6 font-medium">
+                Built natively with{' '}
+                <span className="text-[#1B9AAA] font-bold">React Native via Expo</span> for a
+                premium experience on iOS and Android. Under 60 seconds to complete a full day.
+              </p>
             </div>
           </AnimateOnScroll>
-        </div>
-      </section>
 
-      {/* ── APP PREVIEW ──────────────────────────────────────────────────────── */}
-      <section className="bg-white py-28">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid items-center gap-20 lg:grid-cols-2">
-            <AnimateOnScroll animation="fade-right">
-              <div>
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#1B9AAA]">
-                  Employee Experience
-                </p>
-                <h2 className="mb-5 text-4xl font-black leading-tight tracking-tight text-[#001148] md:text-5xl">
-                  Everything they need,<br />in their pocket.
-                </h2>
-                <p className="mb-8 text-slate-500 leading-relaxed">
-                  From daily habit logging to team challenges and rewards — SEEGLA runs beautifully as a native Android app. Under 60 seconds to log a full day.
-                </p>
-                <ul className="space-y-3.5">
-                  {[
-                    'Real-time step, water, sleep & exercise tracking',
-                    'Streak counters and daily goal progress',
-                    'Team leaderboard and peer accountability',
-                    'One-tap habit logging with instant point rewards',
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm text-slate-600">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#1B9AAA]" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll animation="fade-left" delay={150}>
-              <div className="flex justify-center lg:justify-end">
-                <PhoneMockup />
-              </div>
-            </AnimateOnScroll>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            {/* Burnout check-in — large dark card */}
+            <div className="md:col-span-5">
+              <AnimateOnScroll animation="fade-up">
+                <div className="rounded-[2rem] bg-[#001148] p-10 flex flex-col justify-between text-white relative overflow-hidden min-h-[420px]">
+                  <div className="relative z-10">
+                    <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-headline font-bold tracking-widest mb-8 border border-white/20 uppercase">
+                      Core Experience
+                    </span>
+                    <h3 className="text-3xl font-headline font-extrabold mb-6">
+                      60-second burnout check-in
+                    </h3>
+                    <p className="text-white/70 leading-relaxed max-w-sm">
+                      Just 3 questions a day. Identify stress patterns before they lead to
+                      turnover. Fast, anonymous, and essential.
+                    </p>
+                  </div>
+                  <div className="mt-12 bg-white/5 rounded-t-3xl p-6 h-40 border-t border-x border-white/20">
+                    <div className="w-full h-5 bg-white/10 rounded mb-4" />
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="h-16 bg-[#1B9AAA]/30 rounded-xl flex items-center justify-center text-2xl">
+                        😊
+                      </div>
+                      <div className="h-16 bg-white/10 rounded-xl" />
+                      <div className="h-16 bg-white/10 rounded-xl" />
+                    </div>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            {/* 8PM Promo Hour */}
+            <div className="md:col-span-4">
+              <AnimateOnScroll animation="fade-up" delay={80}>
+                <div
+                  className="rounded-[2rem] p-10 flex flex-col justify-center items-center text-center relative overflow-hidden min-h-[420px]"
+                  style={{ background: '#001f24' }}
+                >
+                  <div
+                    className="absolute inset-0 opacity-40"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(27,154,170,0.4) 0%, transparent 100%)',
+                    }}
+                  />
+                  <div className="relative z-10">
+                    <Moon className="h-16 w-16 text-[#1B9AAA] mb-6 mx-auto" />
+                    <h4 className="text-3xl font-headline font-extrabold text-white mb-4 tracking-tight">
+                      8PM Promo Hour
+                    </h4>
+                    <p className="text-[#1B9AAA]/80 font-medium">
+                      Nightly bonus points drop to keep healthy habits alive outside office hours.
+                    </p>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            {/* Auto step tracking */}
+            <div className="md:col-span-3">
+              <AnimateOnScroll animation="fade-up" delay={160}>
+                <div className="rounded-[2rem] bg-white p-10 border border-[#C6C5D1]/10 shadow-[0_10px_30px_rgba(0,17,72,0.06)] flex flex-col justify-between min-h-[420px]">
+                  <div>
+                    <div className="w-14 h-14 bg-[#1B9AAA]/10 rounded-2xl flex items-center justify-center mb-8">
+                      <Footprints className="h-7 w-7 text-[#1B9AAA]" />
+                    </div>
+                    <h4 className="text-2xl font-headline font-extrabold text-[#001148] mb-3">
+                      Auto step tracking
+                    </h4>
+                    <p className="text-[#45464F] text-sm font-medium">
+                      Seamless integration with Google Fit &amp; Apple Health.
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-headline font-bold text-[#5E7D7E] uppercase tracking-widest border-t border-[#C6C5D1]/10 pt-6 mt-6 block">
+                    Native SDK Integration
+                  </span>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            {/* Employee Feed */}
+            <div className="md:col-span-4">
+              <AnimateOnScroll animation="fade-up">
+                <div className="rounded-[2rem] bg-white p-10 border border-[#C6C5D1]/10 shadow-[0_10px_30px_rgba(0,17,72,0.06)] flex flex-col justify-between min-h-[260px]">
+                  <div>
+                    <div className="flex -space-x-3 mb-8">
+                      {[
+                        { initials: 'JD', bg: 'bg-[#001148]' },
+                        { initials: 'AM', bg: 'bg-[#1B9AAA]' },
+                        { initials: 'KL', bg: 'bg-[#5E7D7E]' },
+                      ].map(({ initials, bg }) => (
+                        <div
+                          key={initials}
+                          className={`w-12 h-12 rounded-full border-4 border-white ${bg} text-white flex items-center justify-center font-bold text-sm`}
+                        >
+                          {initials}
+                        </div>
+                      ))}
+                    </div>
+                    <h4 className="text-2xl font-headline font-extrabold text-[#001148] mb-3">
+                      Employee Feed
+                    </h4>
+                    <p className="text-[#45464F] text-sm font-medium">
+                      Team recognition &amp; peer kudos. Foster a culture of appreciation and
+                      healthy competition via leaderboards.
+                    </p>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            {/* Streak Counters */}
+            <div className="md:col-span-3">
+              <AnimateOnScroll animation="fade-up" delay={80}>
+                <div className="rounded-[2rem] bg-[#1B9AAA] p-10 text-white flex flex-col justify-between min-h-[260px]">
+                  <Flame className="h-12 w-12" />
+                  <div>
+                    <h4 className="text-2xl font-headline font-extrabold mb-2">Streak Counters</h4>
+                    <p className="text-white/80 text-sm font-medium">
+                      Behavioral science-backed mechanics to ensure consistency.
+                    </p>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            {/* Privacy & Reminders */}
+            <div className="md:col-span-5">
+              <AnimateOnScroll animation="fade-up" delay={160}>
+                <div className="rounded-[2rem] bg-white p-10 border border-[#C6C5D1]/10 shadow-[0_10px_30px_rgba(0,17,72,0.06)] grid grid-cols-2 gap-10 min-h-[260px]">
+                  <div className="flex flex-col gap-4">
+                    <ShieldCheck className="h-8 w-8 text-[#5E7D7E]" />
+                    <h5 className="text-lg font-headline font-extrabold text-[#001148]">
+                      Private Tracking
+                    </h5>
+                    <p className="text-xs text-[#45464F] font-medium leading-relaxed">
+                      Hydration &amp; sleep logs kept 100% private. Habits without corporate
+                      pressure.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <Bell className="h-8 w-8 text-[#5E7D7E]" />
+                    <h5 className="text-lg font-headline font-extrabold text-[#001148]">
+                      Push Reminders
+                    </h5>
+                    <p className="text-xs text-[#45464F] font-medium leading-relaxed">
+                      Smart, non-intrusive notifications for movement and mindfulness.
+                    </p>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
           </div>
         </div>
       </section>
-      
-    
 
-      {/* ── ROI & BENEFITS ───────────────────────────────────────────────────── */}
-      <section id="roi-benefits" className="bg-[#F7F9FC] py-32 relative overflow-hidden">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(0,17,72,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,17,72,.5) 1px, transparent 1px)',
-            backgroundSize: '48px 48px',
-          }}
-        />
-
-        <div className="relative mx-auto max-w-6xl px-6">
-          <div className="grid items-start gap-16 lg:grid-cols-2">
-
-            {/* Left — copy */}
+      {/* ── ROI ──────────────────────────────────────────────────────────────── */}
+      <section id="roi" className="py-32 bg-white">
+        <div className="max-w-[1280px] mx-auto px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
             <AnimateOnScroll animation="fade-right">
               <div>
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#1B9AAA]">
-                  ROI &amp; Benefits
-                </p>
-                <h2 className="mb-5 text-3xl font-black leading-tight tracking-tight text-[#001148] md:text-4xl">
+                <span className="text-[#5E7D7E] font-headline font-bold tracking-[0.2em] text-xs uppercase mb-6 block">
+                  Business Impact
+                </span>
+                <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-[#001148] leading-tight mb-8">
                   Invest in wellness.<br />See measurable results.
                 </h2>
-                <p className="mb-8 text-slate-500 leading-relaxed text-sm">
-                  SEEGLA turns employee wellness into a strategic advantage — with hard data to back every HR decision.
+                <p className="text-lg text-[#45464F] mb-10 leading-relaxed font-medium">
+                  Seegla turns employee wellness into a strategic business advantage. We move
+                  beyond &ldquo;perks&rdquo; into real-world HR data that impacts the bottom line,
+                  specifically targeting the Philippine workforce&apos;s unique challenges.
                 </p>
-
-                <ul className="space-y-4">
-                  {BENEFITS.map(({ icon: Icon, text }) => (
-                    <li key={text} className="flex items-start gap-3">
-                      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#1B9AAA]/20 bg-[#E8F6F8]">
-                        <Icon className="h-3.5 w-3.5 text-[#1B9AAA]" />
+                <div className="space-y-6">
+                  {[
+                    {
+                      title: 'Lower Turnover',
+                      body: 'Replacing an employee in PH costs up to 1.5× their annual salary. Boost retention via meaningful engagement.',
+                    },
+                    {
+                      title: 'Real-time HR Dashboards',
+                      body: 'Institutional-grade data analytics to monitor organization-wide burnout levels instantly.',
+                    },
+                    {
+                      title: 'Fewer Sick Days',
+                      body: 'Clients report an average of 32% reduction in unplanned absences within the first 90 days.',
+                    },
+                  ].map(({ title, body }) => (
+                    <div key={title} className="flex items-start gap-5">
+                      <div className="w-6 h-6 rounded-full bg-[#5E7D7E]/10 flex items-center justify-center shrink-0 mt-1">
+                        <Check className="h-3.5 w-3.5 text-[#5E7D7E]" />
                       </div>
-                      <span className="pt-1 text-sm leading-snug text-slate-700">{text}</span>
-                    </li>
+                      <div>
+                        <h4 className="text-base font-bold text-[#001148]">{title}</h4>
+                        <p className="text-sm text-[#45464F] font-medium">{body}</p>
+                      </div>
+                    </div>
                   ))}
-                </ul>
-
-                <div className="mt-10">
-                  <Link href="/book-a-demo">
-                    <Button className="gap-2 rounded-full bg-[#001148] px-6 font-bold text-white hover:bg-[#001148]/80 transition-all duration-150">
-                      Get Your ROI Estimate <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
                 </div>
               </div>
             </AnimateOnScroll>
 
-            {/* Right — stats grid */}
             <AnimateOnScroll animation="fade-left" delay={150}>
-              <div className="grid grid-cols-2 gap-3 mt-10">
-                {STATS.map((stat, i) => (
-                  <div
-                    key={stat.label}
-                    className={`rounded-2xl border p-6 ${
-                      i === 0
-                        ? 'border-[#001148] bg-[#001148] text-white'
-                        : i === 1
-                        ? 'border-[#1B9AAA] bg-[#1B9AAA] text-white'
-                        : i === 2
-                        ? 'border-[#F47560] bg-[#F47560] text-white'
-                        : 'border-slate-200 bg-white text-[#001148]'
-                    }`}
-                  >
-                    <p className="text-4xl font-black leading-none">{stat.value}</p>
-                    <p className="mt-2.5 text-sm font-bold">{stat.label}</p>
-                    <p className={`mt-0.5 text-xs ${i < 3 ? 'opacity-70' : 'text-slate-500'}`}>{stat.sub}</p>
+              <div className="rounded-[2rem] bg-[#001148] p-16 text-center shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#5E7D7E]/10 opacity-30" />
+                <div className="relative z-10">
+                  <span className="text-[#1B9AAA] font-headline font-extrabold tracking-[0.3em] text-sm uppercase">
+                    Projected Value
+                  </span>
+                  <div className="mt-8 mb-4">
+                    <span className="text-8xl md:text-9xl font-headline font-extrabold text-white tracking-tighter">
+                      42x
+                    </span>
                   </div>
-                ))}
+                  <h3 className="text-2xl font-headline font-bold text-white mb-8">
+                    Return on Investment
+                  </h3>
+                  <div className="h-1 w-20 bg-[#1B9AAA]/40 mx-auto mb-8" />
+                  <p className="text-white/70 text-base font-medium leading-relaxed max-w-xs mx-auto">
+                    Calculated for a 200-person company at only{' '}
+                    <span className="text-white font-bold">₱199/employee/month.</span>
+                  </p>
+                </div>
               </div>
             </AnimateOnScroll>
-
           </div>
         </div>
       </section>
 
-      
-
-
       {/* ── FAQ ──────────────────────────────────────────────────────────────── */}
-      <section id="faq" className="bg-white py-28">
-        <div className="mx-auto max-w-2xl px-6">
+      <section id="faq" className="py-32 bg-[#F7F9FC]">
+        <div className="max-w-[1280px] mx-auto px-8">
           <AnimateOnScroll>
-            <div className="mb-14 text-center">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#1B9AAA]">FAQ</p>
-              <h2 className="text-4xl font-black tracking-tight text-[#001148] md:text-5xl">Questions answered.</h2>
-              <p className="mt-4 text-slate-500">Everything you need to know before licensing SEEGLA.</p>
+            <div className="text-center mb-20">
+              <h2 className="text-4xl font-headline font-extrabold text-[#001148]">
+                Frequently Asked Questions
+              </h2>
             </div>
           </AnimateOnScroll>
           <FaqAccordion />
         </div>
       </section>
 
-      {/* ── FINAL CTA ────────────────────────────────────────────────────────── */}
-      <section className="bg-[#F7F9FC] py-20">
-        <div className="mx-auto max-w-4xl px-6">
-          <AnimateOnScroll animation="zoom-in">
-            <div className="relative overflow-hidden rounded-3xl bg-[#001148] px-10 py-20 text-center shadow-2xl">
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.04]"
-                style={{
-                  backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)',
-                  backgroundSize: '40px 40px',
-                }}
-              />
-              <div className="pointer-events-none absolute top-0 right-0 h-[300px] w-[300px] rounded-full bg-[#1B9AAA] opacity-[0.1] blur-[80px]" />
-              <div className="relative">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#1B9AAA]">Get Started Today</p>
-                <h2 className="mb-5 text-3xl font-black text-white md:text-5xl leading-tight">
-                  Ready to build a healthier,<br />more productive workforce?
-                </h2>
-                <p className="mx-auto mb-10 max-w-lg text-white/50 leading-relaxed">
-                  Talk to our team, get a license key, and have your first organization live within the day. Only pay for what you actually use.
-                </p>
-                <div className="flex flex-wrap justify-center gap-3">
-                  <Link href="/book-a-demo">
-                    <Button
-                      size="lg"
-                      className="h-12 gap-2 rounded-full bg-[#1B9AAA] px-8 font-bold text-white hover:bg-[#157B89] shadow-[0_6px_0_0_rgba(27,154,170,0.4)] hover:-translate-y-0.5 transition-all duration-150"
-                    >
-                      Request a Demo <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                  <Link href="/waitlist">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="h-12 rounded-full border-white/20 bg-white/5 px-8 font-semibold text-white hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-150"
-                    >
-                      Join the Waitlist
-                    </Button>
-                  </Link>
-                </div>
+      {/* ── LEAD CAPTURE ─────────────────────────────────────────────────────── */}
+      <section id="waitlist" className="py-32 bg-[#001148] relative overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-20 relative z-10 items-center">
+          <AnimateOnScroll animation="fade-right">
+            <div>
+              <h2 className="text-5xl md:text-7xl font-headline font-extrabold text-white mb-8 tracking-tighter">
+                Be first.<br />Get ahead.
+              </h2>
+              <p className="text-white/70 text-xl max-w-md font-medium leading-relaxed">
+                Join the waitlist today and lead the shift toward a healthier, more engaged
+                organization. Limited spots available for our 2026 Beta cohort.
+              </p>
+              <div className="mt-12 flex items-center gap-4 text-[#1B9AAA]">
+                <ShieldCheck className="h-5 w-5" />
+                <span className="text-xs font-headline font-bold tracking-[0.2em] uppercase">
+                  No credit card required
+                </span>
               </div>
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll animation="fade-left" delay={150}>
+            <div className="bg-white rounded-[2.5rem] p-12 shadow-2xl">
+              <WaitlistForm />
             </div>
           </AnimateOnScroll>
         </div>
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-slate-100 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-10">
-          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-            <Image
-              src="/SEEGLA-LOGO-VARIATIONPRIMARY.png"
-              alt="SEEGLA"
-              width={110}
-              height={30}
-              className="h-7 w-auto object-contain"
-            />
-            <nav className="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
-              <a href="#how-it-works"    className="hover:text-[#001148] transition-colors">How It Works</a>
-              <a href="#roi-benefits"    className="hover:text-[#001148] transition-colors">ROI &amp; Benefits</a>
-              <a href="#success-stories" className="hover:text-[#001148] transition-colors">Success Stories</a>
-              <a href="#about"           className="hover:text-[#001148] transition-colors">About</a>
-              <a href="#faq"             className="hover:text-[#001148] transition-colors">FAQ</a>
-              <Link href="/book-a-demo"  className="hover:text-[#001148] transition-colors">Book a Demo</Link>
-              <Link href="/waitlist"     className="hover:text-[#001148] transition-colors">Join Waitlist</Link>
-            </nav>
+      <footer className="bg-[#001148] pt-24 pb-12">
+        <div className="max-w-[1280px] mx-auto px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 pb-16 border-b border-white/10">
+            <div>
+              <Image
+                src="/SEEGLA-LOGO-VARIATIONPRIMARY.png"
+                alt="SEEGLA"
+                width={110}
+                height={30}
+                className="h-8 w-auto mb-8 brightness-0 invert"
+              />
+              <p className="text-white/50 text-sm leading-relaxed max-w-sm font-medium">
+                © 2026 Seegla. Philippines. The first gamified corporate wellness platform for
+                the Filipino workforce. Healthy People. Growing Business.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-10">
+              <div className="flex flex-col gap-6">
+                <h5 className="text-white font-headline font-bold text-xs tracking-widest uppercase">
+                  Platform
+                </h5>
+                <a href="#how-it-works" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  How It Works
+                </a>
+                <a href="#features" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  Features
+                </a>
+                <a href="#roi" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  ROI
+                </a>
+                <a href="#faq" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  FAQ
+                </a>
+              </div>
+              <div className="flex flex-col gap-6">
+                <h5 className="text-white font-headline font-bold text-xs tracking-widest uppercase">
+                  Company
+                </h5>
+                <Link href="/book-a-demo" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  Book a Demo
+                </Link>
+                <a href="#waitlist" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  Join Waitlist
+                </a>
+                <Link href="/admin/login" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                  Admin Login
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-100 pt-6 md:flex-row">
-            <p className="text-xs text-slate-400">
-              &copy; {new Date().getFullYear()} SEEGLA. Building healthier workplaces, one metric at a time.
-            </p>
-            <p className="text-xs text-slate-400">Philippines · B2B Corporate Wellness Platform</p>
+          <div className="pt-12 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span className="text-[10px] text-white/30 font-headline font-bold tracking-[0.3em] uppercase">
+              Built for the future of work.
+            </span>
+            <span className="text-[10px] text-white/30 font-headline font-bold tracking-[0.2em] uppercase">
+              Philippines · B2B Corporate Wellness
+            </span>
           </div>
         </div>
       </footer>
