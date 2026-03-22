@@ -7,17 +7,17 @@ import { ArrowRight, Menu, X } from 'lucide-react'
 
 const NAV_LINKS = [
   { label: 'How It Works', href: '/#how-it-works' },
-  { label: 'Features',     href: '/#features'     },
-  { label: 'ROI',          href: '/#roi'          },
-  { label: 'FAQ',          href: '/#faq'          },
+  { label: 'Features', href: '/#features' },
+  { label: 'ROI', href: '/#roi' },
+  { label: 'FAQ', href: '/#faq' },
 ]
 
 const SECTION_IDS = ['how-it-works', 'features', 'roi', 'faq', 'waitlist']
 
 export default function MarketingNav() {
   const [activeSection, setActiveSection] = useState<string>('')
-  const [scrolled, setScrolled]           = useState(false)
-  const [mobileOpen, setMobileOpen]       = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
@@ -44,11 +44,10 @@ export default function MarketingNav() {
 
       {/* ── Nav container — glass ──────────────────────────────────────────── */}
       <div
-        className={`flex w-full max-w-6xl items-center justify-between md:grid md:grid-cols-3 rounded-2xl px-5 py-1 transition-all duration-500 ${
-          scrolled
-            ? 'shadow-[0_8px_32px_rgba(0,17,72,0.18),0_1px_0_rgba(255,255,255,0.6)_inset]'
-            : 'shadow-[0_4px_24px_rgba(0,17,72,0.10),0_1px_0_rgba(255,255,255,0.5)_inset]'
-        }`}
+        className={`flex w-full max-w-7xl items-center justify-between md:grid md:grid-cols-3 rounded-2xl px-5 py-1 transition-all duration-500 ${scrolled
+          ? 'shadow-[0_8px_32px_rgba(0,17,72,0.18),0_1px_0_rgba(255,255,255,0.6)_inset]'
+          : 'shadow-[0_4px_24px_rgba(0,17,72,0.10),0_1px_0_rgba(255,255,255,0.5)_inset]'
+          }`}
         style={{
           background: scrolled
             ? 'linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(240,244,255,0.60) 100%)'
@@ -82,30 +81,29 @@ export default function MarketingNav() {
         {/* Desktop nav links */}
         <nav className="hidden items-center justify-center gap-1 md:flex">
           {NAV_LINKS.map(({ label, href }) => {
-            const id       = sectionId(href)
+            const id = sectionId(href)
             const isActive = activeSection === id
             return (
               <a
                 key={id}
                 href={href}
-                className={`relative rounded-xl px-3 py-1.5 font-headline text-sm font-bold transition-all duration-200 ${
-                  isActive
-                    ? '-translate-y-0.5'
-                    : 'hover:-translate-y-0.5 active:translate-y-0'
-                }`}
+                className={`relative rounded-xl px-3 py-1.5 font-headline text-sm font-bold transition-all duration-200 ${isActive
+                  ? '-translate-y-0.5'
+                  : 'hover:-translate-y-0.5 active:translate-y-0'
+                  }`}
                 style={
                   isActive
                     ? {
-                        color: '#ffffff',
-                        background: 'linear-gradient(135deg, rgba(27,154,170,0.80) 0%, rgba(21,123,137,0.65) 100%)',
-                        boxShadow: '0 1px 0 rgba(255,255,255,0.40) inset, 0 -1px 0 rgba(0,17,72,0.10) inset, 0 4px 16px rgba(27,154,170,0.30)',
-                        border: '1px solid rgba(255,255,255,0.35)',
-                      }
+                      color: '#ffffff',
+                      background: 'linear-gradient(135deg, rgba(27,154,170,0.80) 0%, rgba(21,123,137,0.65) 100%)',
+                      boxShadow: '0 1px 0 rgba(255,255,255,0.40) inset, 0 -1px 0 rgba(0,17,72,0.10) inset, 0 4px 16px rgba(27,154,170,0.30)',
+                      border: '1px solid rgba(255,255,255,0.35)',
+                    }
                     : {
-                        color: '#000000',
-                        background: 'transparent',
-                        border: '1px solid transparent',
-                      }
+                      color: '#000000',
+                      background: 'transparent',
+                      border: '1px solid transparent',
+                    }
                 }
                 onMouseEnter={(e) => {
                   if (isActive) return

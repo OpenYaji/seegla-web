@@ -1,12 +1,12 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import MarketingNav from '@/components/marketing/navbar'
 import AnimateOnScroll from '@/components/ui/animate-on-scroll'
 import {
   Zap, CreditCard, BarChart3, Footprints, Moon, Flame, Bell,
-  ShieldCheck, CheckCircle2, ChevronDown, Check,
+  ShieldCheck, CheckCircle2, ChevronDown, Check, ArrowUp,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -248,7 +248,7 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <header
-        className="relative pt-48 pb-32 overflow-hidden"
+        className="relative pt-32 pb-32 overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #F7F9FC 0%, #ECEEF1 100%)' }}
       >
         <div className="max-w-[1280px] mx-auto px-8 text-center">
@@ -273,14 +273,15 @@ export default function Home() {
           </AnimateOnScroll>
 
           <AnimateOnScroll animation="fade-up" delay={240}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
               <Link href="/book-a-demo">
-                <button className="bg-[#1B9AAA] text-white px-10 py-5 rounded-2xl font-headline font-bold text-base shadow-lg shadow-[#1B9AAA]/20 hover:-translate-y-1 transition-all">
+                <button className="cursor-pointer bg-[#1B9AAA] text-white px-10 py-5 rounded-2xl font-headline font-bold text-base shadow-lg shadow-[#1B9AAA]/20 hover:-translate-y-1 transition-all active:scale-95">
                   Book a Demo
                 </button>
               </Link>
+
               <a href="#waitlist">
-                <button className="bg-white text-[#001148] px-10 py-5 rounded-2xl font-headline font-bold text-base border border-[#C6C5D1]/30 shadow-[0_10px_30px_rgba(0,17,72,0.06)] hover:bg-[#ECEEF1] transition-all">
+                <button className="cursor-pointer bg-white text-[#001148] px-10 py-5 rounded-2xl font-headline font-bold text-base border border-[#C6C5D1]/30 shadow-[0_10px_30px_rgba(0,17,72,0.06)] hover:bg-[#ECEEF1] transition-all active:scale-95">
                   Join the Waitlist
                 </button>
               </a>
@@ -647,10 +648,10 @@ export default function Home() {
                 <h5 className="text-white font-headline font-bold text-xs tracking-widest uppercase">
                   Company
                 </h5>
-                <Link href="/book-a-demo" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                <Link href="/book-a-demo" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors cursor-pointer">
                   Book a Demo
                 </Link>
-                <a href="#waitlist" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
+                <a href="#waitlist" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors cursor-pointer">
                   Join Waitlist
                 </a>
                 <Link href="/admin/login" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
@@ -669,6 +670,51 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ── Scroll to top ─────────────────────────────────────────────────── */}
+      <ScrollToTop />
     </div>
+  )
+}
+
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 400)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      aria-label="Scroll to top"
+      className="group fixed bottom-8 right-8 z-50 flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300"
+      style={{
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? 'auto' : 'none',
+        transform: visible ? 'translateY(0)' : 'translateY(16px)',
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(230,237,255,0.50) 100%)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        border: '1px solid rgba(255,255,255,0.50)',
+        boxShadow: '0 4px 24px rgba(0,17,72,0.12), 0 1px 0 rgba(255,255,255,0.60) inset',
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget
+        el.style.background = 'linear-gradient(135deg, rgba(27,154,170,0.80) 0%, rgba(21,123,137,0.65) 100%)'
+        el.style.boxShadow = '0 4px 24px rgba(27,154,170,0.30), 0 1px 0 rgba(255,255,255,0.40) inset'
+        el.style.border = '1px solid rgba(255,255,255,0.40)'
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget
+        el.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(230,237,255,0.50) 100%)'
+        el.style.boxShadow = '0 4px 24px rgba(0,17,72,0.12), 0 1px 0 rgba(255,255,255,0.60) inset'
+        el.style.border = '1px solid rgba(255,255,255,0.50)'
+      }}
+    >
+      <ArrowUp className="h-4 w-4 text-[#001148] transition-colors duration-200 group-hover:text-white" />
+    </button>
   )
 }
