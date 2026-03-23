@@ -24,7 +24,7 @@ const STEPS = [
     icon: CreditCard,
     title: '2. Company-Funded Rewards',
     description:
-      'Points earned can be redeemed for local perks or cash via GCash integration, motivating participation and rewarding consistent healthy behavior.',
+      'Points earned can be redeemed for perks or cash, motivating participation and rewarding healthy behavior.',
   },
   {
     icon: BarChart3,
@@ -267,8 +267,7 @@ export default function Home() {
 
           <AnimateOnScroll animation="fade-up" delay={160}>
             <p className="text-xl text-[#45464F] mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
-              Seegla helps companies boost employee wellness, increase engagement, and reduce
-              healthcare costs — delivering measurable results for the modern Filipino workforce.
+              Seegla helps Philippine companies reduce employee burnout, boost productivity, and retain their best people — through daily wellness habits that employees actually look forward to.
             </p>
           </AnimateOnScroll>
 
@@ -328,7 +327,7 @@ export default function Home() {
           <AnimateOnScroll>
             <div className="mb-20 max-w-3xl">
               <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-[#001148]">
-                Everything they need. In their pocket.
+                Everything your employees need. In their pocket
               </h2>
               <p className="text-lg text-[#45464F] mt-6 font-medium">
                 Built natively with{' '}
@@ -512,27 +511,16 @@ export default function Home() {
                 </p>
                 <div className="space-y-6">
                   {[
-                    {
-                      title: 'Lower Turnover',
-                      body: 'Replacing an employee in PH costs up to 1.5× their annual salary. Boost retention via meaningful engagement.',
-                    },
-                    {
-                      title: 'Real-time HR Dashboards',
-                      body: 'Institutional-grade data analytics to monitor organization-wide burnout levels instantly.',
-                    },
-                    {
-                      title: 'Fewer Sick Days',
-                      body: 'Clients report an average of 32% reduction in unplanned absences within the first 90 days.',
-                    },
-                  ].map(({ title, body }) => (
-                    <div key={title} className="flex items-start gap-5">
+                    'Reduce absenteeism and improve overall team productivity',
+                    'Boost engagement and retention through gamified daily wellness habits',
+                    'Company-funded rewards make wellness tangible and motivating',
+                    'Real-time HR dashboard built for people decisions based on data',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-5">
                       <div className="w-6 h-6 rounded-full bg-[#5E7D7E]/10 flex items-center justify-center shrink-0 mt-1">
                         <Check className="h-3.5 w-3.5 text-[#5E7D7E]" />
                       </div>
-                      <div>
-                        <h4 className="text-base font-bold text-[#001148]">{title}</h4>
-                        <p className="text-sm text-[#45464F] font-medium">{body}</p>
-                      </div>
+                      <p className="text-base font-medium text-[#45464F]">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -589,10 +577,29 @@ export default function Home() {
                 Be first.<br />Get ahead.
               </h2>
               <p className="text-white/70 text-xl max-w-md font-medium leading-relaxed">
-                Join the waitlist today and lead the shift toward a healthier, more engaged
-                organization. Limited spots available for our 2026 Beta cohort.
+                Seegla's beta program is underway. Join the waitlist and be first in line when we open to new companies — with priority onboarding and early adopter benefits.
               </p>
-              <div className="mt-12 flex items-center gap-4 text-[#1B9AAA]">
+
+              <ul className="mt-10 space-y-3 text-white/80 text-base font-medium">
+                <li className="flex items-center gap-3">
+                  <span className="text-[#1B9AAA]">•</span>
+                  First to know when Seegla opens to new companies
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-[#1B9AAA]">•</span>
+                  Priority onboarding — skip the queue
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-[#1B9AAA]">•</span>
+                  Free access locked in before public pricing goes live
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-[#1B9AAA]">•</span>
+                  Exclusive early adopter status for your team
+                </li>
+              </ul>
+
+              <div className="mt-8 flex items-center gap-4 text-[#1B9AAA]">
                 <ShieldCheck className="h-5 w-5" />
                 <span className="text-xs font-headline font-bold tracking-[0.2em] uppercase">
                   No credit card required
@@ -638,7 +645,7 @@ export default function Home() {
                   Features
                 </a>
                 <a href="#roi" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
-                  ROI
+                  Benefits
                 </a>
                 <a href="#faq" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
                   FAQ
@@ -654,9 +661,6 @@ export default function Home() {
                 <a href="#waitlist" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors cursor-pointer">
                   Join Waitlist
                 </a>
-                <Link href="/admin/login" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors">
-                  Admin Login
-                </Link>
               </div>
             </div>
           </div>

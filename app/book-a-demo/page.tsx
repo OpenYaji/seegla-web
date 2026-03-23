@@ -194,10 +194,10 @@ export default function BookADemoPage() {
           <Image
             src="/SECONDARY.png"
             alt="SEEGLA"
-            width={240} // Increased even more for "bigger" feel
-            height={60}
-            className="h-14 w-auto object-contain mb-10 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#1B9AAA]/10"
-            priority
+            width={200} // Doubled the base width
+            height={48} // Doubled the base height
+            className="h-12 w-auto object-contain mb-10 transition-transform hover:scale-105"
+            priority // Added priority to prevent layout shift in the Hero
           />
 
           <div className="mb-8">
@@ -226,13 +226,7 @@ export default function BookADemoPage() {
           <div className="h-px bg-white/10 mb-8" />
           <div className="flex-1"><SidebarSteps /></div>
 
-          <div className="pt-6 border-t border-white/10 flex flex-wrap gap-2">
-            {['500+ companies', '50k+ employees', '98% retention'].map((s) => (
-              <span key={s} className="text-[9px] font-headline font-medium text-white/25 border border-white/10 rounded-full px-2.5 py-1">
-                {s}
-              </span>
-            ))}
-          </div>
+
         </div>
 
         {/* ── Main panel ──────────────────────────────────────────────────── */}
