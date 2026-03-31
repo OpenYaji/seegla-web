@@ -35,38 +35,48 @@ const STEPS = [
 ]
 
 const FAQS = [
+  // {
+  //   q: 'What is Seegla and who is it for?',
+  //   a: 'Seegla is the first gamified corporate wellness platform specifically built for the Filipino workforce. It is designed for HR managers and CEOs at Philippine companies — particularly BPOs, SMEs, and mid-size corporations with 20 to 500 employees — who want to reduce burnout, improve productivity, and retain their people.',
+  // },
+  // {
+  //   q: 'How does the pricing work?',
+  //   a: 'Seegla is currently in beta and free for our partner companies. Our beta program is now closed to new applicants — but you can join the waitlist to be first in line when we open to new companies.',
+  // },
+  // {
+  //   q: 'How do employees join?',
+  //   a: 'HR managers receive a unique 6-character company code when they onboard. Employees download the Seegla app on their personal phone — iOS or Android — enter the company code, and are live within minutes. No IT setup required.',
+  // },
+  // {
+  //   q: 'Can employers see individual employee health data?',
+  //   a: 'No. Individual employee responses are completely private. HR managers and CEOs only see aggregated, anonymized team and department-level wellness scores. Seegla is fully compliant with the Philippine Data Privacy Act — Republic Act 10173.',
+  // },
+  // {
+  //   q: 'How does the rewards system work?',
+  //   a: 'Companies fund their own rewards budget through the Seegla platform. HR sets the rewards table (e.g., 1,000 points = ₱50 via GCash). Employees earn points through verified daily activities and redeem them based on their company’s table. Seegla processes the redemption automatically.',
+  // },
+  // {
+  //   q: 'Is Seegla available on iOS and Android?',
+  //   a: 'Yes. Seegla is built for both iOS and Android. No wearable device is required.',
+  // },
+
   {
-    q: 'What is Seegla and who is it for?',
-    a: 'Seegla is the first gamified corporate wellness platform specifically built for the Filipino workforce. It is designed for HR managers and CEOs at Philippine companies — particularly BPOs, SMEs, and mid-size corporations with 20 to 500 employees — who want to reduce burnout, improve productivity, and retain their people.',
+    q: 'Built for Filipinos',
+    a: 'Designed specifically for the Filipino workforce',
   },
   {
-    q: 'How does the pricing work?',
-    a: 'Seegla is currently in beta and free for our partner companies. Our beta program is now closed to new applicants — but you can join the waitlist to be first in line when we open to new companies.',
+    q: 'Gamified & engaging',
+    a: 'Wellness activities employees actually choose to participate in',
   },
   {
-    q: 'How do employees join?',
-    a: 'HR managers receive a unique 6-character company code when they onboard. Employees download the Seegla app on their personal phone — iOS or Android — enter the company code, and are live within minutes. No IT setup required.',
+    q: ' Data-driven insights',
+    a: 'Daily engagement and wellness scores, not a once-a-year survey',
   },
   {
-    q: 'What activities earn points?',
-    a: 'Points are earned only through verified activities — daily burnout check-in (10 pts), step tracking via Google Fit or Apple Health (up to 20 pts per day), daily login streak (5 pts per day), and the 8PM Promo Hour bonus points drop (15 to 30 pts). All points are verified by the app.',
-  },
-  {
-    q: 'Can employers see individual employee health data?',
-    a: 'No. Individual employee responses are completely private. HR managers and CEOs only see aggregated, anonymized team and department-level wellness scores. Seegla is fully compliant with the Philippine Data Privacy Act — Republic Act 10173.',
-  },
-  {
-    q: 'What does the HR dashboard show?',
-    a: 'The HR dashboard shows the company’s overall wellness score updated daily, a burnout risk index flagging departments with consistently low scores, check-in completion rates, department-by-department comparisons, and an automated weekly wellness report.',
-  },
-  {
-    q: 'How does the rewards system work?',
-    a: 'Companies fund their own rewards budget through the Seegla platform. HR sets the rewards table (e.g., 1,000 points = ₱50 via GCash). Employees earn points through verified daily activities and redeem them based on their company’s table. Seegla processes the redemption automatically.',
-  },
-  {
-    q: 'Is Seegla available on iOS and Android?',
-    a: 'Yes. Seegla is built using React Native via Expo — a single codebase that runs natively on both iOS and Android. No wearable device is required.',
-  },
+    q: 'ROI-focused',
+    a: 'Cost-effective solution for improving engagement, retention, and productivity',
+  }
+
 ]
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -275,7 +285,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
               <Link href="/book-a-demo">
                 <button className="cursor-pointer bg-[#1B9AAA] text-white px-10 py-5 rounded-2xl font-headline font-bold text-base shadow-lg shadow-[#1B9AAA]/20 hover:-translate-y-1 transition-all active:scale-95">
-                  Book a Demo
+                  Schedule a Quick Intro
                 </button>
               </Link>
 
@@ -288,6 +298,64 @@ export default function Home() {
           </AnimateOnScroll>
         </div>
       </header>
+
+      {/* ── THE PROBLEM ──────────────────────────────────────────────────────── */}
+      <section id="the-problem" className="py-32 bg-[#001148] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#5E7D7E]/10 opacity-30 pointer-events-none" />
+        <div className="max-w-[1280px] mx-auto px-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+            <AnimateOnScroll animation="fade-right">
+              <div>
+                <span className="text-[#1B9AAA] font-headline font-bold tracking-[0.2em] text-xs uppercase mb-6 block">
+                  The Problem
+                </span>
+                <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-white leading-tight mb-8">
+                  Most companies only notice when it’s too late.
+                </h2>
+                <div className="h-1 w-20 bg-[#1B9AAA] mb-8" />
+                <p className="text-xl text-white/70 leading-relaxed font-medium">
+                  After someone has already left — there’s no system to see it coming.
+                </p>
+              </div>
+            </AnimateOnScroll>
+
+            <AnimateOnScroll animation="fade-left" delay={150}>
+              <div className="space-y-4">
+                <div className="flex items-center gap-6 rounded-[2rem] bg-[#001f24] border border-[#1B9AAA]/20 p-8 shadow-xl">
+                  <div className="text-[#1B9AAA] text-4xl font-headline font-extrabold">68%</div>
+                  <p className="text-white/90 text-lg font-medium leading-snug">
+                    <span className="text-white font-bold">Filipino employees</span> report feeling burned out
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-6 rounded-[2rem] bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <ArrowUp className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-white text-xl font-headline font-bold mb-1">High Turnover</h3>
+                    <p className="text-white/70 font-medium">
+                      in Philippine companies
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-6 rounded-[2rem] bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <BarChart3 className="h-6 w-6 text-white rotate-180 scale-x-[-1]" />
+                  </div>
+                  <div>
+                    <h3 className="text-white text-xl font-headline font-bold mb-1">Lost Productivity</h3>
+                    <p className="text-white/70 font-medium">
+                      when top performers disengage or resign
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </AnimateOnScroll>
+          </div>
+        </div>
+      </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────────────────── */}
       <section id="how-it-works" className="py-32 bg-white">
@@ -329,11 +397,6 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-[#001148]">
                 Everything your employees need. In their pocket
               </h2>
-              <p className="text-lg text-[#45464F] mt-6 font-medium">
-                Built natively with{' '}
-                <span className="text-[#1B9AAA] font-bold">React Native via Expo</span> for a
-                premium experience on iOS and Android. Under 60 seconds to complete a full day.
-              </p>
             </div>
           </AnimateOnScroll>
 
@@ -347,11 +410,10 @@ export default function Home() {
                       Core Experience
                     </span>
                     <h3 className="text-3xl font-headline font-extrabold mb-6">
-                      60-second burnout check-in
+                      Daily Wellness Check-In
                     </h3>
                     <p className="text-white/70 leading-relaxed max-w-sm">
-                      Just 3 questions a day. Identify stress patterns before they lead to
-                      turnover. Fast, anonymous, and essential.
+                      Quick, simple, and designed to track employee wellbeing. Spot stress and burnout early so your team stays healthy, engaged, and productive. Fully anonymous and easy to complete
                     </p>
                   </div>
                   <div className="mt-12 bg-white/5 rounded-t-3xl p-6 h-40 border-t border-x border-white/20">
@@ -384,11 +446,10 @@ export default function Home() {
                   <div className="relative z-10">
                     <Moon className="h-16 w-16 text-[#1B9AAA] mb-6 mx-auto" />
                     <h4 className="text-3xl font-headline font-extrabold text-white mb-4 tracking-tight">
-                      8PM Promo Hour
+                      Gamified Daily Challenges
                     </h4>
                     <p className="text-[#1B9AAA]/80 font-medium">
-                      Nightly bonus points drop to keep healthy habits alive outside office hours.
-                    </p>
+                      Engaging wellness activities and rewards that motivate employees to stay consistent with healthy habits — anytime, anywhere.                    </p>
                   </div>
                 </div>
               </AnimateOnScroll>
@@ -403,10 +464,10 @@ export default function Home() {
                       <Footprints className="h-7 w-7 text-[#1B9AAA]" />
                     </div>
                     <h4 className="text-2xl font-headline font-extrabold text-[#001148] mb-3">
-                      Auto step tracking
+                      Activity Tracking
                     </h4>
                     <p className="text-[#45464F] text-sm font-medium">
-                      Seamless integration with Google Fit &amp; Apple Health.
+                      Automatically monitor daily movement and healthy habits using employees’ phones — no extra devices needed.
                     </p>
                   </div>
                   <span className="text-[10px] font-headline font-bold text-[#5E7D7E] uppercase tracking-widest border-t border-[#C6C5D1]/10 pt-6 mt-6 block">
@@ -560,7 +621,7 @@ export default function Home() {
           <AnimateOnScroll>
             <div className="text-center mb-20">
               <h2 className="text-4xl font-headline font-extrabold text-[#001148]">
-                Frequently Asked Questions
+                Why SEEGLA?
               </h2>
             </div>
           </AnimateOnScroll>
@@ -656,7 +717,7 @@ export default function Home() {
                   Company
                 </h5>
                 <Link href="/book-a-demo" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors cursor-pointer">
-                  Book a Demo
+                  Schedule a Quick Intro
                 </Link>
                 <a href="#waitlist" className="text-white/50 hover:text-[#1B9AAA] text-sm transition-colors cursor-pointer">
                   Join Waitlist

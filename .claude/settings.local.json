@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "WebFetch(domain:registry.npmjs.org)",
+      "WebFetch(domain:discuss.ai.google.dev)",
+      "WebFetch(domain:deepwiki.com)",
+      "Bash(mkdir -p \"C:/Users/QCU/Downloads/seegla-web/public/marketing\")",
+      "Bash(curl -L \"https://lh3.googleusercontent.com/aida/ADBb0ujvAwkLtNzFX2HxyzyHGXExlyElxi9VBmhWsfowI7IQi70QY8RqW30Xu9CfjHJ3OVqxJx5AhUowA5ZuMouXC5knf8_4JkBt5VjZuHnh2LDAe-SZJQAQxCNuas2uSBPgDR5TaSOzz8CGOV1BUueYbFaWsNXNIj-oZCwNHMWczGyjspGqFwL36Wgpi_mcLAozETEStx9UEprUvCOZ8rMRH_LCsMiD8cZmYRgwwt_S4ZtoPETQGpyAUTCB10w=w1280\" -o \"C:/Users/QCU/Downloads/seegla-web/public/marketing/seegla-landing-1280.png\" -v)",
+      "Bash(curl -L \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzYwMGRkNzYyOWFhYjQ5YzA4ODc5ZjE0ODExNDJiYjQ2EgsSBxDzhLqr3h0YAZIBJAoKcHJvamVjdF9pZBIWQhQxMDQzMzM5MjIzOTAyNDcxNjY4MA&filename=&opi=89354086\" -o \"/tmp/stitch_screen.html\")",
+      "Bash(npm run:*)"
+    ]
+  }
+}

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { CheckCircle2, ArrowLeft, ChevronLeft, ChevronRight, Clock, Video, Check, ArrowRight } from 'lucide-react'
+import { CheckCircle2, ArrowLeft, ChevronLeft, ChevronRight, Clock, Video, Check, ArrowRight, Users, MessageSquare, HelpCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -42,6 +42,21 @@ const BLANK: BookingForm = {
   companyName: '', teamSize: '', goals: '',
 }
 
+const WHAT_TO_EXPECT = [
+  {
+    icon: MessageSquare,
+    text: 'A short discussion about your current challenges — burnout, engagement, retention, absenteeism',
+  },
+  {
+    icon: Users,
+    text: 'A walkthrough of how Seegla is built to help teams like yours',
+  },
+  {
+    icon: HelpCircle,
+    text: 'Open Q&A — no pressure, no commitment',
+  },
+]
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
@@ -62,7 +77,6 @@ function fmt(d: Date, opts: Intl.DateTimeFormatOptions) {
   return d.toLocaleDateString('en-US', opts)
 }
 
-// Shared field styles (DESIGN.md: bottom-border only inputs)
 const inputClass =
   'w-full bg-[#F7F9FC] border-0 border-b-2 border-[#C6C5D1] focus:border-[#1B9AAA] focus:ring-0 focus:outline-none transition-all px-0 py-3 text-sm font-medium text-[#191C1E] placeholder:text-[#45464F]/40'
 const labelClass =
@@ -187,46 +201,67 @@ export default function BookADemoPage() {
       </Link>
 
       {/* Card */}
-      <div className="w-full max-w-[960px] rounded-[2rem] overflow-hidden shadow-[0_20px_60px_rgba(0,17,72,0.12)] grid lg:grid-cols-[260px_1fr]">
+      <div className="w-full max-w-[1040px] rounded-[2rem] overflow-hidden shadow-[0_20px_60px_rgba(0,17,72,0.12)] grid lg:grid-cols-[320px_1fr]">
 
         {/* ── Sidebar ─────────────────────────────────────────────────────── */}
-        <div className="hidden lg:flex bg-[#001148] flex-col p-8">
+        <div className="hidden lg:flex bg-[#001148] flex-col p-8 overflow-y-auto">
           <Image
             src="/SECONDARY.png"
             alt="SEEGLA"
-            width={200} // Doubled the base width
-            height={48} // Doubled the base height
+            width={200}
+            height={48}
             className="h-12 w-auto object-contain mb-10 transition-transform hover:scale-105"
-            priority // Added priority to prevent layout shift in the Hero
+            priority
           />
 
-          <div className="mb-8">
-            <p className="text-[9px] font-headline font-bold uppercase tracking-[0.3em] text-[#1B9AAA] mb-2">
-              Book a Demo
+          {/* Main heading */}
+          <div className="mb-7">
+            <p className="text-[9px] font-headline font-bold uppercase tracking-[0.3em] text-[#1B9AAA] mb-3">
+              20–30 min conversation
             </p>
-            <h2 className="text-2xl font-headline font-extrabold text-white leading-snug mb-5">
-              See SEEGLA<br />in action.
+            <h2 className="text-2xl font-headline font-extrabold text-white leading-snug mb-4">
+              Let&apos;s Talk About<br />Your Team
             </h2>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-sm text-white/50">
-                <div className="h-7 w-7 shrink-0 rounded-xl bg-white/5 flex items-center justify-center">
-                  <Clock className="h-3.5 w-3.5 text-[#1B9AAA]" />
+            <p className="text-sm text-white/55 leading-relaxed">
+              A quick conversation to understand your team&apos;s engagement, retention, and absenteeism challenges — and show how Seegla helps leaders address them.
+            </p>
+          </div>
+
+          <div className="h-px bg-white/10 mb-7" />
+
+          {/* What to expect */}
+          <div className="mb-7">
+            <p className="text-[9px] font-headline font-bold uppercase tracking-[0.3em] text-[#1B9AAA] mb-5">
+              What to Expect
+            </p>
+            <div className="space-y-5">
+              {WHAT_TO_EXPECT.map(({ icon: Icon, text }, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="h-7 w-7 shrink-0 rounded-xl bg-white/5 flex items-center justify-center mt-0.5">
+                    <Icon className="h-3.5 w-3.5 text-[#1B9AAA]" />
+                  </div>
+                  <p className="text-sm text-white/55 leading-relaxed">{text}</p>
                 </div>
-                <span>30-minute session</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-white/50">
-                <div className="h-7 w-7 shrink-0 rounded-xl bg-white/5 flex items-center justify-center">
-                  <Video className="h-3.5 w-3.5 text-[#1B9AAA]" />
-                </div>
-                <span>Google Meet · link on confirm</span>
-              </div>
+              ))}
             </div>
           </div>
 
-          <div className="h-px bg-white/10 mb-8" />
+          <div className="h-px bg-white/10 mb-7" />
+
+          {/* Best for */}
+          <div className="mb-8">
+            <p className="text-[9px] font-headline font-bold uppercase tracking-[0.3em] text-[#1B9AAA] mb-2">
+              Best for
+            </p>
+            <p className="text-sm text-white/55 leading-relaxed">
+              BPO and service-based teams looking to reduce turnover, boost engagement, and prevent burnout.
+            </p>
+          </div>
+
+          <div className="h-px bg-white/10 mb-7" />
+
+          {/* Step tracker */}
           <div className="flex-1"><SidebarSteps /></div>
-
-
         </div>
 
         {/* ── Main panel ──────────────────────────────────────────────────── */}
@@ -247,161 +282,183 @@ export default function BookADemoPage() {
 
           {/* ── Step 1: Date & Time ─────────────────────────────────────── */}
           {step === 'datetime' && (
-            <div className="flex-1 flex flex-col lg:grid lg:grid-cols-[1fr_180px]">
+            <div className="flex-1 flex flex-col">
 
-              {/* Calendar */}
-              <div className="p-6 lg:p-8 border-r border-[#C6C5D1]/15">
-                <h1 className="text-xl font-headline font-extrabold text-[#001148] mb-1">
-                  When works for you?
+              {/* CTA banner above calendar */}
+              <div className="px-6 lg:px-8 pt-6 lg:pt-8 pb-5 border-b border-[#C6C5D1]/15">
+                <h1 className="text-2xl font-headline font-extrabold text-[#001148] mb-1.5">
+                  Book Your Slot
                 </h1>
-                <p className="text-xs text-[#45464F] mb-6">
-                  Pick any available weekday — we&apos;ll confirm within 1 business day.
+                <p className="text-sm text-[#45464F]">
+                  Takes less than a minute to book. No prep required.
                 </p>
 
-                {/* Month nav */}
-                <div className="flex items-center justify-between mb-5">
-                  <button
-                    onClick={prevMo}
-                    disabled={!canBack}
-                    className={cn(
-                      'h-8 w-8 rounded-xl flex items-center justify-center transition-all',
-                      canBack ? 'text-[#001148] hover:bg-[#F7F9FC]' : 'text-[#C6C5D1] cursor-not-allowed',
-                    )}
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </button>
-                  <span className="text-sm font-headline font-extrabold text-[#001148]">
-                    {MONTHS[vm]} {vy}
-                  </span>
-                  <button
-                    onClick={nextMo}
-                    className="h-8 w-8 rounded-xl flex items-center justify-center text-[#001148] hover:bg-[#F7F9FC] transition-all"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                </div>
-
-                {/* Day headers */}
-                <div className="grid grid-cols-7 mb-2">
-                  {DAYS.map((d) => (
-                    <p key={d} className="text-center text-[9px] font-headline font-bold text-[#C6C5D1] uppercase tracking-widest">
-                      {d}
-                    </p>
+                {/* Mobile: what to expect */}
+                <div className="lg:hidden mt-5 space-y-3">
+                  {WHAT_TO_EXPECT.map(({ icon: Icon, text }, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <div className="h-6 w-6 shrink-0 rounded-lg bg-[#F7F9FC] flex items-center justify-center mt-0.5">
+                        <Icon className="h-3 w-3 text-[#1B9AAA]" />
+                      </div>
+                      <p className="text-xs text-[#45464F] leading-relaxed">{text}</p>
+                    </div>
                   ))}
                 </div>
-
-                {/* Day grid */}
-                <div className="grid grid-cols-7 gap-0.5">
-                  {grid.map((day, i) => {
-                    if (!day) return <div key={`_${i}`} />
-                    const off = isOff(vy, vm, day)
-                    const on = isActive(day)
-                    return (
-                      <button
-                        key={day}
-                        disabled={off}
-                        onClick={() => pickDay(day)}
-                        className={cn(
-                          'mx-auto h-10 w-10 flex items-center justify-center rounded-xl text-sm font-semibold transition-all duration-150',
-                          off && 'text-[#C6C5D1] cursor-not-allowed',
-                          !off && !on && 'text-[#001148] hover:bg-[#F7F9FC]',
-                          on && 'bg-[#001148] text-white shadow-[0_4px_12px_rgba(0,17,72,0.25)] scale-105',
-                        )}
-                      >
-                        {day}
-                      </button>
-                    )
-                  })}
-                </div>
-
-                <p className="mt-5 text-[10px] font-headline text-[#C6C5D1] text-center tracking-wider uppercase">
-                  Philippine Standard Time (UTC+8)
-                </p>
-
-                {/* Mobile time slots */}
-                {date && (
-                  <div className="lg:hidden mt-6 pt-6 border-t border-[#C6C5D1]/20">
-                    <p className="text-xs font-headline font-extrabold text-[#001148] mb-4">
-                      {fmt(date, { weekday: 'long', month: 'long', day: 'numeric' })}
-                      <span className="font-normal text-[#45464F] ml-2">— pick a time</span>
-                    </p>
-                    <div className="grid grid-cols-4 gap-2">
-                      {SLOTS.map((t) => (
-                        <button
-                          key={t}
-                          onClick={() => setTime(t)}
-                          className={cn(
-                            'rounded-xl py-2.5 text-xs font-semibold transition-all',
-                            time === t
-                              ? 'bg-[#001148] text-white shadow-[0_4px_12px_rgba(0,17,72,0.2)]'
-                              : 'bg-[#F7F9FC] text-[#45464F] hover:bg-[#ECEEF1]',
-                          )}
-                        >
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                    {time && (
-                      <button
-                        onClick={() => setStep('details')}
-                        className="mt-4 w-full h-12 rounded-2xl bg-[#1B9AAA] text-white font-headline font-bold text-sm shadow-lg shadow-[#1B9AAA]/25 hover:brightness-110 transition-all flex items-center justify-center gap-2"
-                      >
-                        Continue <ArrowRight className="h-4 w-4" />
-                      </button>
-                    )}
-                  </div>
-                )}
               </div>
 
-              {/* Desktop time slot panel */}
-              <div className="hidden lg:flex flex-col p-5">
-                {date ? (
-                  <>
-                    <div className="mb-4">
-                      <p className="text-[10px] font-headline font-bold uppercase tracking-widest text-[#45464F]">
-                        {fmt(date, { weekday: 'long' })}
-                      </p>
-                      <p className="text-sm font-headline font-extrabold text-[#001148]">
-                        {fmt(date, { month: 'long', day: 'numeric' })}
-                      </p>
-                    </div>
+              <div className="flex-1 flex flex-col lg:grid lg:grid-cols-[1fr_180px]">
 
-                    <div className="overflow-y-auto space-y-1.5" style={{ maxHeight: 280 }}>
-                      {SLOTS.map((t) => (
+                {/* Calendar */}
+                <div className="p-6 lg:p-8 border-r border-[#C6C5D1]/15">
+                  <p className="text-xs font-headline font-bold uppercase tracking-widest text-[#45464F] mb-5">
+                    Select a date
+                  </p>
+
+                  {/* Month nav */}
+                  <div className="flex items-center justify-between mb-5">
+                    <button
+                      onClick={prevMo}
+                      disabled={!canBack}
+                      className={cn(
+                        'h-8 w-8 rounded-xl flex items-center justify-center transition-all',
+                        canBack ? 'text-[#001148] hover:bg-[#F7F9FC]' : 'text-[#C6C5D1] cursor-not-allowed',
+                      )}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <span className="text-sm font-headline font-extrabold text-[#001148]">
+                      {MONTHS[vm]} {vy}
+                    </span>
+                    <button
+                      onClick={nextMo}
+                      className="h-8 w-8 rounded-xl flex items-center justify-center text-[#001148] hover:bg-[#F7F9FC] transition-all"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  {/* Day headers */}
+                  <div className="grid grid-cols-7 mb-2">
+                    {DAYS.map((d) => (
+                      <p key={d} className="text-center text-[9px] font-headline font-bold text-[#C6C5D1] uppercase tracking-widest">
+                        {d}
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Day grid */}
+                  <div className="grid grid-cols-7 gap-0.5">
+                    {grid.map((day, i) => {
+                      if (!day) return <div key={`_${i}`} />
+                      const off = isOff(vy, vm, day)
+                      const on = isActive(day)
+                      return (
                         <button
-                          key={t}
-                          onClick={() => setTime(t)}
+                          key={day}
+                          disabled={off}
+                          onClick={() => pickDay(day)}
                           className={cn(
-                            'w-full rounded-xl py-2.5 text-xs font-semibold transition-all duration-150',
-                            time === t
-                              ? 'bg-[#001148] text-white shadow-[0_4px_12px_rgba(0,17,72,0.2)] scale-[1.02]'
-                              : 'bg-[#F7F9FC] text-[#45464F] hover:bg-[#ECEEF1]',
+                            'mx-auto h-10 w-10 flex items-center justify-center rounded-xl text-sm font-semibold transition-all duration-150',
+                            off && 'text-[#C6C5D1] cursor-not-allowed',
+                            !off && !on && 'text-[#001148] hover:bg-[#F7F9FC]',
+                            on && 'bg-[#001148] text-white shadow-[0_4px_12px_rgba(0,17,72,0.25)] scale-105',
                           )}
                         >
-                          {t}
+                          {day}
                         </button>
-                      ))}
-                    </div>
-
-                    {time && (
-                      <button
-                        onClick={() => setStep('details')}
-                        className="mt-3 w-full h-11 shrink-0 rounded-2xl bg-[#1B9AAA] text-white font-headline font-bold text-xs shadow-[0_4px_12px_rgba(27,154,170,0.3)] hover:brightness-110 transition-all flex items-center justify-center gap-1.5"
-                      >
-                        Continue <ArrowRight className="h-3.5 w-3.5" />
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full gap-3 text-center px-3">
-                    <div className="h-10 w-10 rounded-xl bg-[#F7F9FC] flex items-center justify-center">
-                      <Clock className="h-4 w-4 text-[#C6C5D1]" />
-                    </div>
-                    <p className="text-xs text-[#C6C5D1] leading-relaxed font-medium">
-                      Pick a date to see available times
-                    </p>
+                      )
+                    })}
                   </div>
-                )}
+
+                  <p className="mt-5 text-[10px] font-headline text-[#C6C5D1] text-center tracking-wider uppercase">
+                    Philippine Standard Time (UTC+8)
+                  </p>
+
+                  {/* Mobile time slots */}
+                  {date && (
+                    <div className="lg:hidden mt-6 pt-6 border-t border-[#C6C5D1]/20">
+                      <p className="text-xs font-headline font-extrabold text-[#001148] mb-4">
+                        {fmt(date, { weekday: 'long', month: 'long', day: 'numeric' })}
+                        <span className="font-normal text-[#45464F] ml-2">— pick a time</span>
+                      </p>
+                      <div className="grid grid-cols-4 gap-2">
+                        {SLOTS.map((t) => (
+                          <button
+                            key={t}
+                            onClick={() => setTime(t)}
+                            className={cn(
+                              'rounded-xl py-2.5 text-xs font-semibold transition-all',
+                              time === t
+                                ? 'bg-[#001148] text-white shadow-[0_4px_12px_rgba(0,17,72,0.2)]'
+                                : 'bg-[#F7F9FC] text-[#45464F] hover:bg-[#ECEEF1]',
+                            )}
+                          >
+                            {t}
+                          </button>
+                        ))}
+                      </div>
+                      {time && (
+                        <button
+                          onClick={() => setStep('details')}
+                          className="mt-4 w-full h-12 rounded-2xl bg-[#1B9AAA] text-white font-headline font-bold text-sm shadow-lg shadow-[#1B9AAA]/25 hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                        >
+                          Continue <ArrowRight className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Desktop time slot panel */}
+                <div className="hidden lg:flex flex-col p-5">
+                  {date ? (
+                    <>
+                      <div className="mb-4">
+                        <p className="text-[10px] font-headline font-bold uppercase tracking-widest text-[#45464F]">
+                          {fmt(date, { weekday: 'long' })}
+                        </p>
+                        <p className="text-sm font-headline font-extrabold text-[#001148]">
+                          {fmt(date, { month: 'long', day: 'numeric' })}
+                        </p>
+                      </div>
+
+                      <div className="overflow-y-auto space-y-1.5" style={{ maxHeight: 280 }}>
+                        {SLOTS.map((t) => (
+                          <button
+                            key={t}
+                            onClick={() => setTime(t)}
+                            className={cn(
+                              'w-full rounded-xl py-2.5 text-xs font-semibold transition-all duration-150',
+                              time === t
+                                ? 'bg-[#001148] text-white shadow-[0_4px_12px_rgba(0,17,72,0.2)] scale-[1.02]'
+                                : 'bg-[#F7F9FC] text-[#45464F] hover:bg-[#ECEEF1]',
+                            )}
+                          >
+                            {t}
+                          </button>
+                        ))}
+                      </div>
+
+                      {time && (
+                        <button
+                          onClick={() => setStep('details')}
+                          className="mt-3 w-full h-11 shrink-0 rounded-2xl bg-[#1B9AAA] text-white font-headline font-bold text-xs shadow-[0_4px_12px_rgba(27,154,170,0.3)] hover:brightness-110 transition-all flex items-center justify-center gap-1.5"
+                        >
+                          Continue <ArrowRight className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full gap-3 text-center px-3">
+                      <div className="h-10 w-10 rounded-xl bg-[#F7F9FC] flex items-center justify-center">
+                        <Clock className="h-4 w-4 text-[#C6C5D1]" />
+                      </div>
+                      <p className="text-xs text-[#C6C5D1] leading-relaxed font-medium">
+                        Pick a date to see available times
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -563,7 +620,7 @@ export default function BookADemoPage() {
                     <p className="text-xs font-headline font-extrabold text-[#001148]">
                       {date && fmt(date, { weekday: 'long', month: 'long', day: 'numeric' })}
                     </p>
-                    <p className="text-[10px] text-[#45464F] mt-0.5">{time} · 30 minutes</p>
+                    <p className="text-[10px] text-[#45464F] mt-0.5">{time} · 20–30 minutes</p>
                   </div>
                 </div>
                 <div className="h-px bg-[#C6C5D1]/20" />

@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { label: 'How It Works', href: '/#how-it-works' },
   { label: 'Features', href: '/#features' },
   { label: 'Benefits', href: '/#roi' },
-  { label: 'FAQ', href: '/#faq' },
+  { label: 'Why SEEGLA', href: '/#faq' },
 ]
 
 const SECTION_IDS = ['how-it-works', 'features', 'roi', 'faq', 'waitlist']
@@ -177,7 +177,7 @@ export default function MarketingNav() {
                 el.style.transform = 'translateY(-2px)'
               }}
             >
-              Book a Demo
+              Schedule a Quick Intro
               <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
             </button>
           </Link>
