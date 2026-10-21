@@ -1,0 +1,62 @@
+{
+  "hero-03.webp": {
+    "title": "The Daily Check-In",
+    "kicker": "60 seconds, three questions",
+    "alt": "Meeting room with a wall display and laptops on the table",
+    "cta": { "label": "Schedule a Quick Intro", "href": "/book-a-demo" }
+  },
+  "hero-02.webp": {
+    "title": "Rewards for healthy habits",
+    "kicker": "Midday bonus points, then Promo Hour",
+    "alt": "Rooftop terrace with lounge seating above the city",
+    "cta": { "label": "Join the Waitlist", "href": "#waitlist" }
+  },
+  "hero-01.webp": {
+    "title": "Built for HR Leaders",
+    "kicker": "Aggregated scores, never individual data",
+    "alt": "Open-plan office with shared desks, laptops and plants",
+    "cta": { "label": "See how it works", "href": "#how-it-works" }
+  },
+  "feature-01.jpg": {
+    "title": "Daily Wellness Check-In",
+    "kicker": "Anonymous by design",
+    "meta": "60 seconds | 3 questions a day",
+    "alt": "Placeholder artwork for the Daily Wellness Check-In feature"
+  },
+  "feature-02.jpg": {
+    "title": "Gamified Daily Challenges",
+    "kicker": "Points you can spend",
+    "meta": "Daily | Company-funded rewards",
+    "alt": "Placeholder artwork for the Gamified Daily Challenges feature"
+  },
+  "feature-03.jpg": {
+    "title": "Activity Tracking",
+    "kicker": "No wearable required",
+    "meta": "Automatic | iOS and Android",
+    "alt": "Placeholder artwork for the Activity Tracking feature"
+  },
+  "feature-04.jpg": {
+    "title": "Employee Feed",
+    "kicker": "Peer recognition and leaderboards",
+    "meta": "Team-wide | Kudos and rankings",
+    "alt": "Placeholder artwork for the Employee Feed feature"
+  },
+  "feature-05.jpg": {
+    "title": "Streak Counters",
+    "kicker": "Behavioral science, applied",
+    "meta": "Daily | Consistency mechanics",
+    "alt": "Placeholder artwork for the Streak Counters feature"
+  },
+  "feature-06.jpg": {
+    "title": "Private Tracking",
+    "kicker": "Kept 100% private",
+    "meta": "Hydration and sleep | Never shared",
+    "alt": "Placeholder artwork for the Private Tracking feature"
+  },
+  "feature-07.jpg": {
+    "title": "Push Reminders",
+    "kicker": "Only when it helps",
+    "meta": "Movement and mindfulness | Non-intrusive",
+    "alt": "Placeholder artwork for the Push Reminders feature"
+  }
+}

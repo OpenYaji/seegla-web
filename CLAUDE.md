@@ -66,3 +66,18 @@ The `AgenticWorkflow/` directory contains an AI-assisted automation framework se
 - **`AGENTS.md`** — Instructions for agent behavior within this framework
 
 When working on automation tasks: check `tools/` for existing scripts before writing new ones, and update the relevant workflow after making changes. Credentials for these tools live in `AgenticWorkflow/.env` (not the Next.js `.env.local`).
+
+<!-- antislop:start -->
+## antislop
+For UI, copy, people, mobile layout, or code comments work, read the antislop core filter and then the skill for the task. The skills live in `~/.agents/skills/` (also mirrored in `~/.claude/skills/`):
+- Core filter: `~/.agents/skills/antislop/SKILL.md`
+- UI / visual: `~/.agents/skills/antislop-ui/SKILL.md`
+- Copy & text: `~/.agents/skills/antislop-copywriting/SKILL.md`
+- People: `~/.agents/skills/antislop-human/SKILL.md`
+- Mobile / responsive: `~/.agents/skills/antislop-layoutmobile/SKILL.md`
+- Code comments: `~/.agents/skills/antislop-code/SKILL.md`
+Before starting, follow the core's "Two Usage Modes" section in strict order: explicit session instruction first, then global preference, then ask. A session instruction always wins. For a resolved mode, say `antislop active: <mode> (session override).` or `antislop active: <mode> (global preference).` once before presenting findings or making edits, using the actual mode and source. Acknowledging the user's request without naming the source does not replace this notice.
+Only an explicit choice of antislop during or after selects a session mode. A request to review, audit, or avoid file edits does not select a mode; read the global preference in that case. Another skill's mode does not select antislop's mode.
+If the mode is unresolved, ask during/after and end the response; wait for the answer before any UI review, planning, or concept. For read-only tasks, put the active-mode notice only at the start of the final answer, never in progress messages. For editing tasks, announce before the first edit and omit it from the final answer.
+To update antislop later: run `npx antislop-ai --update` (installer route) or `npx skills update -g` (skills-directory route).
+<!-- antislop:end -->

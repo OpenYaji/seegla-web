@@ -2,262 +2,194 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { ArrowRight, Menu, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { SITE_NAV } from '@/components/landing-page/content'
 
-const NAV_LINKS = [
-  { label: 'How It Works', href: '/#how-it-works' },
-  { label: 'Features', href: '/#features' },
-  { label: 'Benefits', href: '/#roi' },
-  { label: 'Why SEEGLA', href: '/#faq' },
-]
+const SECTION_IDS = SITE_NAV.categories.map((c) => c.href.replace('#', ''))
 
-const SECTION_IDS = ['how-it-works', 'features', 'roi', 'faq', 'waitlist']
-
+/**
+ * Marketing navigation.
+ *
+ * Two tiers, following the reference design: a utility row with the brand,
+ * the partner-pricing line, the primary action and a log-in link, and a
+ * category row separated by a hairline.
+ *
+ * The previous version drove its hover, active and pressed states from
+ * twenty inline mouse handlers that mutated element styles. That is why it
+ * could not express a focus state, and it is why the active item was a
+ * glowing gradient pill. All of it is now a class, so the states are visible
+ * to the keyboard as well as the mouse.
+ */
 export default function MarketingNav() {
-  const [activeSection, setActiveSection] = useState<string>('')
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  const sectionIds = SECTION_IDS
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 20)
-      const offset = window.scrollY + 120
-      for (const id of SECTION_IDS) {
+      setScrolled(window.scrollY > 8)
+      const probe = window.scrollY + 140
+      let current = ''
+      for (const id of sectionIds) {
         const el = document.getElementById(id)
-        if (el && offset >= el.offsetTop && offset < el.offsetTop + el.offsetHeight) {
-          setActiveSection(id)
-          return
+        if (el && probe >= el.offsetTop && probe < el.offsetTop + el.offsetHeight) {
+          current = id
+          break
         }
       }
-      setActiveSection('')
+      setActive(current)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const sectionId = (href: string) => href.replace('/#', '')
+  // Escape closes the mobile menu, and focus returns to the control that
+  // opened it.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+    const onClick = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onClick)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onClick)
+    }
+  }, [open])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
-
-      {/* ── Nav container — glass ──────────────────────────────────────────── */}
-      <div
-        className={`flex w-full max-w-7xl items-center justify-between md:grid md:grid-cols-3 rounded-2xl px-5 py-1 transition-all duration-500 ${scrolled
-          ? 'shadow-[0_8px_32px_rgba(0,17,72,0.18),0_1px_0_rgba(255,255,255,0.6)_inset]'
-          : 'shadow-[0_4px_24px_rgba(0,17,72,0.10),0_1px_0_rgba(255,255,255,0.5)_inset]'
-          }`}
-        style={{
-          background: scrolled
-            ? 'linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(240,244,255,0.60) 100%)'
-            : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(230,237,255,0.40) 100%)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          border: '1px solid rgba(255,255,255,0.45)',
-        }}
-      >
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center justify-start py-1"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    <header className="sticky top-0 z-50 bg-surface-lowest">
+      <div className="mx-auto flex h-20 max-w-shell items-center gap-4 px-6 sm:px-8 lg:px-12">
+        <button
+          ref={toggleRef}
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls="marketing-menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          className="focus-ring -ml-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-navy transition-colors hover:bg-surface-low md:hidden"
         >
-          <div className="relative flex items-center overflow-hidden h-14 w-[240px] group">
-            <Image
-              src="/seeglat2.png"
-              alt="SEEGLA"
-              width={240}
-              height={120}
-              className="h-14 w-auto object-contain transition-all duration-300 md:group-hover:opacity-0 md:group-hover:-translate-y-full absolute left-0"
-              priority
-            />
-            <span className="absolute left-1/2 -translate-x-1/2 text-lg font-headline font-bold text-[#001148] opacity-0 translate-y-full transition-all duration-300 md:group-hover:opacity-100 md:group-hover:translate-y-0 whitespace-nowrap">
-              Homepage
-            </span>
-          </div>
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
+          </svg>
+        </button>
+
+        <Link href="/" className="focus-ring flex min-h-11 shrink-0 items-center rounded-md" aria-label="Seegla home">
+          <Image
+            src="/seeglat2.png"
+            alt="Seegla"
+            width={240}
+            height={120}
+            priority
+            className="h-9 w-auto"
+          />
         </Link>
 
-        {/* Desktop nav links */}
-        <nav className="hidden items-center justify-center gap-1 md:flex">
-          {NAV_LINKS.map(({ label, href }) => {
-            const id = sectionId(href)
-            const isActive = activeSection === id
-            return (
-              <a
-                key={id}
-                href={href}
-                className={`relative rounded-xl px-3 py-1.5 font-headline text-sm font-bold transition-all duration-200 ${isActive
-                  ? '-translate-y-0.5'
-                  : 'hover:-translate-y-0.5 active:translate-y-0'
-                  }`}
-                style={
-                  isActive
-                    ? {
-                      color: '#ffffff',
-                      background: 'linear-gradient(135deg, rgba(27,154,170,0.80) 0%, rgba(21,123,137,0.65) 100%)',
-                      boxShadow: '0 1px 0 rgba(255,255,255,0.40) inset, 0 -1px 0 rgba(0,17,72,0.10) inset, 0 4px 16px rgba(27,154,170,0.30)',
-                      border: '1px solid rgba(255,255,255,0.35)',
-                    }
-                    : {
-                      color: '#000000',
-                      background: 'transparent',
-                      border: '1px solid transparent',
-                    }
-                }
-                onMouseEnter={(e) => {
-                  if (isActive) return
-                  const el = e.currentTarget
-                  el.style.color = '#ffffff'
-                  el.style.background = 'linear-gradient(135deg, rgba(27,154,170,0.75) 0%, rgba(21,123,137,0.65) 100%)'
-                  el.style.boxShadow = '0 1px 0 rgba(255,255,255,0.40) inset, 0 -1px 0 rgba(0,17,72,0.10) inset, 0 4px 16px rgba(27,154,170,0.30)'
-                  el.style.border = '1px solid rgba(255,255,255,0.35)'
-                }}
-                onMouseLeave={(e) => {
-                  if (isActive) return
-                  const el = e.currentTarget
-                  el.style.color = '#000000'
-                  el.style.background = 'transparent'
-                  el.style.boxShadow = 'none'
-                  el.style.border = '1px solid transparent'
-                }}
-                onMouseDown={(e) => {
-                  const el = e.currentTarget
-                  el.style.background = 'linear-gradient(135deg, rgba(21,123,137,0.85) 0%, rgba(27,154,170,0.70) 100%)'
-                  el.style.boxShadow = '0 2px 6px rgba(0,17,72,0.15) inset'
-                }}
-                onMouseUp={(e) => {
-                  if (isActive) return
-                  const el = e.currentTarget
-                  el.style.background = 'linear-gradient(135deg, rgba(27,154,170,0.75) 0%, rgba(21,123,137,0.65) 100%)'
-                  el.style.boxShadow = '0 1px 0 rgba(255,255,255,0.40) inset, 0 4px 16px rgba(27,154,170,0.30)'
-                }}
-              >
-                {label}
-              </a>
-            )
-          })}
-        </nav>
+        <span
+          aria-hidden="true"
+          className="hidden h-6 w-px bg-hairline lg:block"
+        />
+        <p className="hidden text-sm text-ink-muted lg:block">
+          {SITE_NAV.note}
+        </p>
 
-        {/* Book a Demo — glass teal button */}
-        <div className="hidden items-center justify-end gap-2 md:flex">
-          <Link href="/book-a-demo">
-            <button
-              className="group relative flex items-center gap-2 rounded-xl px-6 py-3 font-headline text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
-              style={{
-                color: '#ffffff',
-                background: 'linear-gradient(135deg, rgba(27,154,170,0.75) 0%, rgba(21,123,137,0.65) 100%)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255,255,255,0.35)',
-                boxShadow: '0 1px 0 rgba(255,255,255,0.40) inset, 0 -1px 0 rgba(0,17,72,0.10) inset, 0 4px 16px rgba(27,154,170,0.30)',
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget
-                el.style.background = 'linear-gradient(135deg, rgba(27,154,170,0.90) 0%, rgba(21,123,137,0.80) 100%)'
-                el.style.boxShadow = '0 1px 0 rgba(255,255,255,0.50) inset, 0 -1px 0 rgba(0,17,72,0.12) inset, 0 6px 20px rgba(27,154,170,0.40)'
-                el.style.border = '1px solid rgba(255,255,255,0.50)'
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget
-                el.style.background = 'linear-gradient(135deg, rgba(27,154,170,0.75) 0%, rgba(21,123,137,0.65) 100%)'
-                el.style.boxShadow = '0 1px 0 rgba(255,255,255,0.40) inset, 0 -1px 0 rgba(0,17,72,0.10) inset, 0 4px 16px rgba(27,154,170,0.30)'
-                el.style.border = '1px solid rgba(255,255,255,0.35)'
-              }}
-              onMouseDown={(e) => {
-                const el = e.currentTarget
-                el.style.background = 'linear-gradient(135deg, rgba(21,123,137,0.85) 0%, rgba(27,154,170,0.70) 100%)'
-                el.style.boxShadow = '0 2px 6px rgba(0,17,72,0.15) inset'
-                el.style.transform = 'translateY(1px)'
-              }}
-              onMouseUp={(e) => {
-                const el = e.currentTarget
-                el.style.background = 'linear-gradient(135deg, rgba(27,154,170,0.90) 0%, rgba(21,123,137,0.80) 100%)'
-                el.style.boxShadow = '0 1px 0 rgba(255,255,255,0.50) inset, 0 6px 20px rgba(27,154,170,0.40)'
-                el.style.transform = 'translateY(-2px)'
-              }}
-            >
-              Schedule a Quick Intro
-              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </button>
-          </Link>
-        </div>
+        <div className="ml-auto flex items-center gap-3 sm:gap-5">
+          <p className="hidden text-sm text-ink-muted xl:block">
+            {SITE_NAV.stat.lead}{' '}
+            <span className="font-headline font-bold text-eucalyptus-deep">
+              {SITE_NAV.stat.figure}
+            </span>{' '}
+            {SITE_NAV.stat.tail}
+          </p>
 
-        {/* Mobile toggle */}
-        <div className="flex justify-end md:hidden">
-          <button
-            className="flex h-9 w-9 items-center justify-center rounded-xl text-[#001148] transition-colors"
-            style={{ background: 'rgba(255,255,255,0.40)', border: '1px solid rgba(255,255,255,0.50)' }}
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
+          <Link
+            href={SITE_NAV.cta.href}
+            className="cta-primary focus-ring inline-flex min-h-11 items-center justify-center rounded-xl px-5 py-2.5 font-headline text-xs font-extrabold uppercase tracking-[0.1em] text-on-navy transition-transform hover:-translate-y-0.5 sm:px-6 sm:text-sm"
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+            {SITE_NAV.cta.label}
+          </Link>
+
+          <Link
+            href={SITE_NAV.login.href}
+            className="focus-ring hidden min-h-11 items-center gap-2 rounded-md px-2 text-sm font-medium text-navy transition-colors hover:text-eucalyptus-deep sm:inline-flex"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="8" r="3.5" />
+              <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+            </svg>
+            {SITE_NAV.login.label}
+          </Link>
         </div>
       </div>
 
-      {/* Mobile menu — glass */}
-      {mobileOpen && (
+      <nav aria-label="Sections" className="hidden border-t border-hairline/50 md:block">
+        <ul className="mx-auto flex h-12 max-w-shell items-center justify-center gap-8 px-6 sm:px-8 lg:gap-10 lg:px-12">
+          {SITE_NAV.categories.map((category) => {
+            const id = category.href.replace('#', '')
+            const isActive = active === id
+            return (
+              <li key={category.href}>
+                <a
+                  href={category.href}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`focus-ring inline-flex h-12 items-center border-b-2 text-label-md font-bold uppercase tracking-[0.12em] transition-colors ${
+                    isActive
+                      ? 'border-eucalyptus text-navy'
+                      : 'border-transparent text-ink-muted hover:border-hairline hover:text-navy'
+                  }`}
+                >
+                  {category.label}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+
+      {open && (
         <div
-          className="absolute top-full left-4 right-4 mt-2 rounded-2xl p-4 shadow-[0_10px_40px_rgba(0,17,72,0.16)]"
-          style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.80) 0%, rgba(240,244,255,0.70) 100%)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            border: '1px solid rgba(255,255,255,0.50)',
-          }}
+          ref={menuRef}
+          id="marketing-menu"
+          className="absolute inset-x-0 top-full border-t border-hairline/50 bg-surface-lowest shadow-float md:hidden"
         >
-          <nav className="mb-4 flex flex-col gap-1">
-            {NAV_LINKS.map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-2.5 font-headline text-sm font-bold text-black transition-all duration-150 hover:-translate-y-px active:translate-y-px"
-                style={{ border: '1px solid transparent' }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget
-                  el.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(198,197,209,0.25) 100%)'
-                  el.style.boxShadow = '0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 10px rgba(0,17,72,0.08)'
-                  el.style.border = '1px solid rgba(255,255,255,0.55)'
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget
-                  el.style.background = 'transparent'
-                  el.style.boxShadow = 'none'
-                  el.style.border = '1px solid transparent'
-                }}
-              >
-                {label}
-              </a>
-            ))}
+          <nav aria-label="Sections" className="px-6 py-4">
+            <ul className="flex flex-col">
+              {SITE_NAV.categories.map((category) => (
+                <li key={category.href}>
+                  <a
+                    href={category.href}
+                    onClick={() => setOpen(false)}
+                    className="focus-ring flex min-h-12 items-center border-b border-hairline/40 text-sm font-bold uppercase tracking-[0.12em] text-navy last:border-b-0"
+                  >
+                    {category.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href={SITE_NAV.login.href}
+                  onClick={() => setOpen(false)}
+                  className="focus-ring flex min-h-12 items-center text-sm font-bold uppercase tracking-[0.12em] text-navy"
+                >
+                  {SITE_NAV.login.label}
+                </Link>
+              </li>
+            </ul>
           </nav>
-          <div className="flex flex-col gap-2">
-            <a
-              href="/#waitlist"
-              onClick={() => setMobileOpen(false)}
-              className="w-full flex items-center justify-center rounded-xl px-4 py-2.5 font-headline text-sm font-semibold text-[#001148] transition-all duration-150"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.70) 0%, rgba(198,197,209,0.25) 100%)',
-                border: '1px solid rgba(255,255,255,0.55)',
-                boxShadow: '0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 12px rgba(0,17,72,0.07)',
-              }}
-            >
-              Join Waitlist
-            </a>
-            <Link
-              href="/book-a-demo"
-              onClick={() => setMobileOpen(false)}
-              className="w-full flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 font-headline text-sm font-bold text-white transition-all duration-150"
-              style={{
-                background: 'linear-gradient(135deg, rgba(27,154,170,0.80) 0%, rgba(21,123,137,0.70) 100%)',
-                border: '1px solid rgba(255,255,255,0.35)',
-                boxShadow: '0 1px 0 rgba(255,255,255,0.40) inset, 0 4px 16px rgba(27,154,170,0.30)',
-              }}
-            >
-              Book a Demo <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
         </div>
       )}
     </header>

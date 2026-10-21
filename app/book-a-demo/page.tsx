@@ -45,7 +45,7 @@ const BLANK: BookingForm = {
 const WHAT_TO_EXPECT = [
   {
     icon: MessageSquare,
-    text: 'A short discussion about your current challenges — burnout, engagement, retention, absenteeism',
+    text: 'A short discussion about your current challenges: burnout, engagement, retention, absenteeism',
   },
   {
     icon: Users,
@@ -53,7 +53,7 @@ const WHAT_TO_EXPECT = [
   },
   {
     icon: HelpCircle,
-    text: 'Open Q&A — no pressure, no commitment',
+    text: 'Open Q&A: no pressure, no commitment',
   },
 ]
 
@@ -223,7 +223,7 @@ export default function BookADemoPage() {
               Let&apos;s Talk About<br />Your Team
             </h2>
             <p className="text-sm text-white/55 leading-relaxed">
-              A quick conversation to understand your team&apos;s engagement, retention, and absenteeism challenges — and show how Seegla helps leaders address them.
+              A quick conversation to understand your team&apos;s engagement, retention, and absenteeism challenges, and show how Seegla helps leaders address them.
             </p>
           </div>
 
@@ -379,7 +379,7 @@ export default function BookADemoPage() {
                     <div className="lg:hidden mt-6 pt-6 border-t border-[#C6C5D1]/20">
                       <p className="text-xs font-headline font-extrabold text-[#001148] mb-4">
                         {fmt(date, { weekday: 'long', month: 'long', day: 'numeric' })}
-                        <span className="font-normal text-[#45464F] ml-2">— pick a time</span>
+                        <span className="font-normal text-[#45464F] ml-2">pick a time</span>
                       </p>
                       <div className="grid grid-cols-4 gap-2">
                         {SLOTS.map((t) => (

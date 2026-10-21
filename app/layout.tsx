@@ -17,7 +17,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "SEEGLA | Corporate Wellness for the Filipino Workforce",
   description:
-    "Seegla helps Philippine companies boost employee wellness, increase engagement, and reduce healthcare costs — delivering measurable results.",
+    "Seegla helps Philippine companies boost employee wellness, increase engagement, and reduce healthcare costs, delivering measurable results.",
   icons: {
     icon: "/SEEGLA-LOGO-VARIATIONICON.png",
   },

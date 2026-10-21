@@ -1,77 +1,215 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f7f9fc;
-  --foreground: #191c1e;
-}
+/*
+ * Design tokens for the "Institutional Guardian" system.
+ * Every colour below was checked with the antislop-human contrast formula
+ * (unrounded, WCAG 2.x). Ratios are noted so a future edit can re-verify.
+ *
+ * Brand
+ *   navy            #001148  primary. 16.96:1 on surface-base
+ *   navy-lift       #0f2a6b  primary_container. Gradient partner for navy CTAs
+ *   eucalyptus      #1b9aaa  secondary. GRAPHICS AND LARGE TEXT ONLY:
+ *                             3.36:1 on white, 3.19:1 on surface-base,
+ *                             5.32:1 on navy. Fails 4.5:1 for body text.
+ *   eucalyptus-deep #157b89  text-safe secondary. 4.97:1 on white,
+ *                             4.71:1 on surface-base, 4.97:1 as white-on-it
+ *
+ * Surfaces (tonal layering replaces 1px sectioning borders)
+ *   surface-base #f7f9fc   surface-low #f2f4f7   surface #eceef1
+ *   surface-lowest #ffffff surface-high #e0e3e6
+ *
+ * Text
+ *   ink        #191c1e   ink-muted #45464f (8.88:1 on surface-base)
+ *   on-navy-muted  #b2b7c8 (white 70% on navy, 8.95:1)
+ *   on-navy-subtle #808797 (white 50% on navy, 4.97:1)
+ *   hairline   #c6c5d1   decorative only. Never text, never a section border
+ *   error      #ba1a1a   6.46:1 on white
+ */
+@theme {
+  --color-navy: #001148;
+  --color-navy-lift: #0f2a6b;
+  --color-eucalyptus: #1b9aaa;
+  --color-eucalyptus-deep: #157b89;
+  --color-on-navy: #ffffff;
+  --color-on-navy-muted: #b2b7c8;
+  --color-on-navy-subtle: #808797;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-surface-base: #f7f9fc;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #f2f4f7;
+  --color-surface: #eceef1;
+  --color-surface-high: #e0e3e6;
+  --color-surface-bright: #fdfdfe;
+
+  --color-ink: #191c1e;
+  --color-ink-muted: #45464f;
+  --color-hairline: #c6c5d1;
+  --color-error: #ba1a1a;
+
   --font-headline: var(--font-headline);
   --font-body: var(--font-body);
+
+  /* Type scale straight from DESIGN.md section 3. */
+  --text-display-lg: 3.5rem;
+  --text-display-lg--line-height: 1.08;
+  --text-headline-md: 1.75rem;
+  --text-headline-md--line-height: 1.25;
+  --text-title-md: 1.125rem;
+  --text-title-md--line-height: 1.5;
+  --text-body-md: 0.875rem;
+  --text-body-md--line-height: 1.65;
+  --text-label-md: 0.75rem;
+
+  /* Two elevations only. DESIGN.md permits one ambient shadow; the second
+     belongs to the single floating element (the navigation bar). */
+  --shadow-ambient: 0px 10px 30px rgba(0, 17, 72, 0.06);
+  --shadow-float: 0px 18px 44px rgba(0, 17, 72, 0.1);
+
+  --ease-institutional: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --container-shell: 80rem;
+  --container-copy: 46rem;
 }
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Clears the sticky navigation when an in-page anchor is followed.
+       The nav is 80px (utility row) plus 48px (category row) on desktop. */
+    scroll-padding-top: 8.5rem;
+  }
+
+  body {
+    background-color: var(--color-surface-base);
+    color: var(--color-ink);
+    font-family: var(--font-body), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-navy);
+    color: var(--color-on-navy);
+  }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body, Inter, sans-serif);
+@layer utilities {
+  /*
+   * One focus treatment for the whole site. The ring sits OUTSIDE the element
+   * (outline-offset), so it is measured against the page background and never
+   * disappears into a eucalyptus button. 3:1 against white, 3.6:1 against navy.
+   */
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+  }
+
+  .focus-ring:focus-visible {
+    outline-color: var(--color-eucalyptus-deep);
+  }
+
+  /*
+   * The hero scrim.
+   *
+   * These photographs are already graded with the brand gradient, dark navy on
+   * the left and Eucalyptus teal on the right. A flat scrim over the whole
+   * frame crushes all of that detail.
+   *
+   * The copy is centred, so the scrim runs top to bottom instead: light at
+   * the top and bottom edges where the photograph reads, and a solid band
+   * through the middle where the words sit.
+   *
+   * The band carries 0.62 alpha of navy. Measured against the brightest pixel
+   * in the photos, which is near white, white text lands at 5.2:1. That clears
+   * AA for the small kicker line, not just the headline.
+   *
+   * It is a full-bleed gradient with no edges, so nothing is drawn on the
+   * picture. The photograph is darkened, not framed.
+   *
+   * The second layer keeps the progress dots legible at the foot of the hero.
+   */
+  .hero-scrim {
+    background-image:
+      linear-gradient(
+        to bottom,
+        rgba(0, 17, 72, 0.26) 0%,
+        rgba(0, 17, 72, 0.44) 14%,
+        rgba(0, 17, 72, 0.62) 32%,
+        rgba(0, 17, 72, 0.64) 58%,
+        rgba(0, 17, 72, 0.46) 82%,
+        rgba(0, 17, 72, 0.3) 100%
+      ),
+      linear-gradient(to top, rgba(0, 17, 72, 0.5) 0%, rgba(0, 17, 72, 0) 16%);
+  }
+
+  /* The lithographic gradient DESIGN.md asks for on major CTAs. The lightest
+     stop is #157b89 at 4.97:1 against white text, so the worst point of the
+     gradient still passes. */
+  .cta-primary {
+    background-image: linear-gradient(135deg, #157b89 0%, #0f6a76 100%);
+  }
+
+  .cta-secondary {
+    background-image: linear-gradient(135deg, #0f2a6b 0%, #001148 100%);
+  }
+
+  /* The institutional breadcrumb from DESIGN.md section 5. */
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-label-md);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumb > span + span::before {
+    content: "/";
+    color: var(--color-eucalyptus);
+    margin-right: 0.5rem;
+  }
 }
 
-/* Custom scrollbar — webkit (Chrome, Edge, Safari) */
+/*
+ * Motion is reduced to a single standard across the site. Anyone who asked
+ * their operating system to reduce motion gets none of it.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar: thin and institutional. The previous gradient-and-inset-shadow
+   treatment was decoration competing with the content. */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
-  margin-block: 4px;
+  background: var(--color-surface-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(198, 197, 209, 0.30) 40%,
-    rgba(27, 154, 170, 0.22) 100%
-  );
+  background: var(--color-hairline);
   border-radius: 9999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(0, 17, 72, 0.08),
-    0 2px 8px rgba(0, 17, 72, 0.08);
+  border: 3px solid var(--color-surface-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.70) 0%,
-    rgba(27, 154, 170, 0.35) 50%,
-    rgba(27, 154, 170, 0.50) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.60);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -1px 0 rgba(27, 154, 170, 0.15),
-    0 2px 12px rgba(27, 154, 170, 0.18);
+  background: var(--color-ink-muted);
 }
 
-::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(
-    180deg,
-    rgba(27, 154, 170, 0.40) 0%,
-    rgba(27, 154, 170, 0.60) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.50);
-}
-
-/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(198, 197, 209, 0.45) transparent;
+  scrollbar-color: var(--color-hairline) var(--color-surface-base);
 }

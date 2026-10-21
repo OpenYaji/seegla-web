@@ -120,7 +120,7 @@ function SendLinkModal({
   const handleSend = () => {
     if (!link.trim() || selected.size === 0) return
     const bcc = [...selected].join(',')
-    const body = `${message ? message + '\n\n' : ''}${link}\n\n— Seegla Team`
+    const body = `${message ? message + '\n\n' : ''}${link}\n\nSeegla Team`
     const mailto = `mailto:?bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     window.open(mailto, '_blank')
   }
